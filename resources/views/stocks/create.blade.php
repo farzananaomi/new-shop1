@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="card">
-                    <div class="header">Post Story</div>
+                    <div class="header">Product Storage</div>
                     <div class="content">
                         <div class="form-horizontal">
                             <div class="row">
@@ -27,7 +27,7 @@
             <div class="form-group">
                 <label class="col-md-3"></label>
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-fill btn-info">Post Story</button>
+                    <button type="submit" class="btn btn-fill btn-danger">Save</button>
                     <a href="{{ route('stocks.index') }}"
                        class="btn btn-fill btn-warning pull-right"><i class="fa fa-arrow-left"></i> Cancel</a>
                 </div>

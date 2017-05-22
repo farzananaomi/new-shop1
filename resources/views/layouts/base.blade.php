@@ -75,13 +75,13 @@
         }
 
         .main-panel > .navbar {
-            background: #cbb208;
-            background: -moz-linear-gradient(top, #cb690e 0%,#cb690e  100%);
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cb690e), color-stop(100%, #cb690e));
-            background: -webkit-linear-gradient(top, #cb690e 0%, #cb690e 100%);
-            background: -o-linear-gradient(top, #cb690e 0%, #cb690e  100%);
-            background: -ms-linear-gradient(top, #cb690e 0%, #cb690e  100%);
-            background: linear-gradient(to bottom, #cb690e 0%, #cb690e  100%);
+            background: #c7cbc1;
+            background: -moz-linear-gradient(top, #cb0a0e 0%, #cb0a0e 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cb0a0e), color-stop(100%, #cb0a0e));
+            background: -webkit-linear-gradient(top, #cb0a0e 0%, #cb0a0e 100%);
+            background: -o-linear-gradient(top, #cb0a0e 0%, #cb0a0e  100%);
+            background: -ms-linear-gradient(top, #cb0a0e 0%, #cb0a0e  100%);
+            background: linear-gradient(to bottom, #ff1015 0%, #cb0a0e  100%);
         }
 
         .navbar-brand, .navbar-nav li a {
@@ -119,7 +119,7 @@
         .select2.select2-container {
             margin-bottom: 7px !important;
             border: 0 !important;
-            background-image: linear-gradient(60deg, #89da1f,#89da1f), linear-gradient(#D2D2D2, #D2D2D2) !important;
+            background-image: linear-gradient(60deg, #eef5eb, rgba(243, 238, 245, 0.98)), linear-gradient(#D2D2D2, #D2D2D2) !important;
             background-size: 0 2px, 100% 1px !important;
             background-repeat: no-repeat !important;
             background-position: center bottom, center calc(100% - 1px) !important;
@@ -184,7 +184,7 @@
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-color="orange" data-image={{ asset('theme/img/full-screen-image-4.jpg') }}>
+    <div class="sidebar" data-color="red" data-image={{ asset('theme/img/background.jpg') }}>
         {{--
 
             Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
@@ -194,9 +194,9 @@
 
         <div class="logo">
             <a href="#" class="logo-text">
-                <img src="{{ asset('img/blog.png') }}" alt="Blog" style="height: 28px;margin-right: 10px;">
+                <img src="{{ asset('img/blog.png') }}" alt="Blog" style="height: 40px;margin-right: 10px;">
                 <span>
-                    Blog Story
+                   Invoice
                 </span>
             </a>
         </div>
@@ -241,7 +241,7 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-minimize">
-                    <button id="minimizeSidebar" class="btn btn-success btn-fill btn-round btn-icon">
+                    <button id="minimizeSidebar" class="btn btn-white btn-fill btn-round btn-icon">
                         <i class="fa fa-ellipsis-v visible-on-sidebar-regular"></i>
                         <i class="fa fa-navicon visible-on-sidebar-mini"></i>
                     </button>
@@ -253,7 +253,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Recent Stories</a>
+                    <a class="navbar-brand" href="#">Company Name </a>
                 </div>
                 <div class="collapse navbar-collapse">
 

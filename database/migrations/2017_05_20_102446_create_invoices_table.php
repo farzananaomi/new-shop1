@@ -17,16 +17,19 @@ class CreateInvoicesTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->unsignedInteger('customer_id');
+            $table->string('customer_name');
+            $table->string('customer_contact');
+            $table->string('customer_address');
             $table->string('invoice_no');
             $table->date('invoice_date');
             $table->string('product_name');
-            $table->decimal('quantity', 5, 2);
+            $table->decimal('quantity', 5, 2)->default(1);
             $table->decimal('unit_price',8,2);
             $table->decimal('net_price',8,2);
             $table->string('vat');
             $table->string('discount');
-            $table->string('sub_total');
+            $table->decimal('total', 8,2);
+            $table->decimal('sub_total', 8,2);
             $table->enum('status', ['cash', 'card', 'Other',]);
 
             $table->softDeletes();

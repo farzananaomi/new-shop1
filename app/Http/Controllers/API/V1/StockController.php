@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Data\Repositories\InvoiceRepository;
 use App\Data\Repositories\StockRepositoy;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class StockController extends Controller
 {
-    public function stock (Request $request, StockRepositoy $stocks)
+    public function stock (Request $request, InvoiceRepository $invoices)
     {
         $data = $request->all();
-        $stocks->store($data);
+        $invoices->store($data);
 
         $response = new \stdClass();
         $error    = null;
 
         if ($error !== true) {
             $response->code         = 200;
-            $response->app_message  = "Stock saved";
+            $response->app_message  = "Invoice saved";
             $response->user_message = 'Stock saved successfully!';
             $response->context      = 'registration';
         }

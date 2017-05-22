@@ -28,8 +28,22 @@ class InvoiceREpository implements PaginatedResultInterface, RawQueryBuilderOutp
     public function store($data)
     {
         $invoice             = new Invoice();
-        $invoice->title      = $data['title'];
-        $invoice->desciption = $data['desciption'];
+        $invoice->customer_name      = $data['customer_name'];
+        $invoice->customer_contact      = $data['customer_contact'];
+        $invoice->customer_address    = $data['customer_address'];
+        $invoice->invoice_no = $data['invoice_no'];
+        $invoice->invoice_date      = $data['invoice_date'];
+        $invoice->product_name = $data['product_name'];
+        $invoice->quantity      = $data['quantity'];
+        $invoice->status      = $data['status'];
+        $invoice->unit_price = $data['unit_price'];
+        $invoice->quantity = $data['quantity'];
+        $invoice->net_price      = $data['unit_price']*$data['quantity'];
+        $invoice->vat = $data['vat'];
+        $invoice->discount = $data['discount'];
+        $invoice->total = (($invoice->net_price) + ($data['vat']/100))-($data['discount']/100) ;
+        $invoice->sub_total =$invoice-> sum('total');
+
 
         $invoice->save();
 
