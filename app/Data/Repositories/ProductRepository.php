@@ -24,13 +24,17 @@ class ProductRepository implements PaginatedResultInterface, RawQueryBuilderOutp
     {
         return Product::find($id);
     }
+    public function lists()
+    {
+        return Product::pluck('product_name', 'id');
+    }
 
     public function store($data)
     {
         $product              = new Product();
         $product->category_id = $data['category_id'];
-        $product->Product_code  = $data['Product_code'];
-        $product->Product_name  = $data['Product_name'];
+        $product->product_code  = $data['product_code'];
+        $product->product_name  = $data['product_name'];
         $product->unit_price  = $data['unit_price'];
 
 

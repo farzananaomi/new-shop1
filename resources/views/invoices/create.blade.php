@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="card">
-                    <div class="header">Client Information</div>
+                    <div class="header">Customer Information</div>
                     <div class="content">
                         <div class="form-horizontal">
                             <div class="row">
@@ -85,7 +85,7 @@
             <div class="form-group">
                 <label class="col-md-3"></label>
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-fill btn-info">Create Client</button>
+                    <button type="submit" class="btn btn-fill btn-danger">Save</button>
                     <a href="{{ route('invoices.index') }}"
                        class="btn btn-fill btn-warning pull-right"><i class="fa fa-arrow-left"></i> Cancel</a>
                 </div>

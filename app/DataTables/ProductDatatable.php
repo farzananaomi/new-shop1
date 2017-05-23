@@ -1,25 +1,30 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: hp
+ * Date: 5/23/2017
+ * Time: 4:21 PM
+ */
 
 namespace App\DataTables;
 
-
-use App\Data\Repositories\InvoiceREpository;
+use App\Data\Repositories\ProductRepository;
 use Illuminate\Contracts\view\Factory;
 use Yajra\Datatables\Datatables;
 use Yajra\Datatables\Services\DataTable;
 
-class InvoiceDatatable extends DataTable
+class ProductDatatable extends DataTable
 {
     /**
-     * @var InvoiceRepository
+     * @var ProductRepository
      */
-    protected $invoices;
+    protected $products;
 
-    public function __construct(Datatables $datatables, Factory $viewFactory, InvoiceRepository $repo)
+    public function __construct(Datatables $datatables, Factory $viewFactory, ProductRepository $repo)
     {
         parent::__construct($datatables, $viewFactory);
-        $this->invoices = $repo;
-        $this->invoices->setEnableRawOutput(true);
+        $this->products = $repo;
+        $this->products->setEnableRawOutput(true);
     }
 
     /**
@@ -32,8 +37,8 @@ class InvoiceDatatable extends DataTable
     {
         return $this->datatables
             ->eloquent($this->query())
-            ->addColumn('action', function ($invoice) {
-                return view('invoices.action', compact('invoice'))->render();
+            ->addColumn('action', function ($product) {
+                return view('products.action', compact('product'))->render();
             })
             ->make(true);
 
@@ -46,7 +51,7 @@ class InvoiceDatatable extends DataTable
 
     public function query()
     {
-        $query = $this->invoices->search();
+        $query = $this->products->search();
 
         return $this->applyScopes($query);
     }
@@ -79,14 +84,11 @@ class InvoiceDatatable extends DataTable
     protected function getColumns()
     {
         return [
-            [ 'name' => 'invoices.product_name', 'data' => 'product_name', 'title' => 'Product Name' ],
-            [ 'name' => 'invoices.quantity', 'data' => 'quantity', 'title' => 'Quantity' ],
-            [ 'name' => 'invoices.unit_price', 'data' => 'unit_price', 'title' => 'Unit Price' ],
-            [ 'name' => 'invoices.net_price', 'data' => 'net_price', 'title' => 'Net Price' ],
-            [ 'name' => 'invoices.vat', 'data' => 'vat', 'title' => 'Vat' ],
-            [ 'name' => 'invoices.discount', 'data' => 'discount', 'title' => 'Discount' ] ,
-            [ 'name' => 'invoices.total', 'data' => 'total', 'title' => 'Total' ],
-            [ 'name' => 'invoices.sub_total', 'data' => 'sub_total', 'title' => 'Subtotal' ]
+            [ 'name' => 'products.category_id', 'data' => 'category_id', 'title' => 'Product Name' ],
+            [ 'name' => 'products.product_name', 'data' => 'product_name', 'title' => 'Product Name' ],
+            [ 'name' => 'products.product_code', 'data' => 'product_code', 'title' => 'Product Code' ],
+            [ 'name' => 'products.unit_price', 'data' => 'unit_price', 'title' => 'Unit Price' ],
+
         ];
     }
     /**
@@ -96,9 +98,8 @@ class InvoiceDatatable extends DataTable
      */
     protected function filename()
     {
-        return 'invoice_' . time();
+        return 'product_' . time();
     }
-
 
 
 }

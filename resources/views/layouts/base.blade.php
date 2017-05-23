@@ -209,27 +209,48 @@
         <div class="sidebar-wrapper">
 
             <ul class="nav">
-                <li class="#">
-                    <a href="#">
-                        <i class="pe-7s-id"></i>
-                        <p>Admin Panel</p>
+                <li class="{{ is_active('categories*') }}">
+                    <a href="{{ route('categories.create')}}">
+                        <i class="pe-7s-graph"></i>
+                        <p>Create Category</p>
                     </a>
                 </li>
-                <li class="#" style="margin-left: 28px">
-
-                    <i class="pe-7s-user"></i>
-                    <p>User Panel</p>
-                    <a data-toggle="collapse" href="#profile-collapse" class="collapsed">
-
-                        <b class="caret"></b>
+                <li class="{{ is_active('category*') }}">
+                    <a href="{{ route('categories.index')}}">
+                        <i class="fa fa-address-book-o"></i>
+                        <p> All Category</p>
+                    </a></li>
+                <li class="{{ is_active('categories*') }}">
+                    <a href="{{ route('products.create')}}">
+                        <i class="pe-7s-graph"></i>
+                        <p>Entry Product</p>
                     </a>
-                    <div class="collapse" id="profile-collapse">
-                        <ul class="nav">
-                            <li><a href="#">Login</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
                 </li>
+                <li class="{{ is_active('category*') }}">
+                    <a href="{{ route('products.index')}}">
+                        <i class="fa fa-address-book-o"></i>
+                        <p> Products List</p>
+                    </a></li>
+                <li class="{{ is_active('entities*') }}">
+                    <a href="{{ route('invoices.create')}}">
+                        <i class="fa fa-id-badge"></i>
+                        <p> Create Invoice</p>
+                    </a></li>
+                <li class="{{ is_active('members*') }}">
+                    <a href="{{ route('invoices.index')}}">
+                        <i class=" fa fa-user-plus"></i>
+                        <p>Invoice List</p>
+                    </a></li>
+                <li class="{{ is_active('candidate*') }}">
+                    <a href="{{ route('stocks.create')}}">
+                        <i class=" fa fa-address-card"></i>
+                        <p> Storage</p>
+                    </a></li>
+                <li class="{{ is_active('edit_requests*') }}">
+                    <a href="{{ route('stocks.index')}}">
+                        <i class="fa fa-pencil"></i>
+                        <p> Storage List</p>
+                    </a></li>
 
 
             </ul>
@@ -320,114 +341,63 @@
     </div>
 </div>
 
-@yield('end-content', '')
+@section('after-content')
+@show
 
-</body>
-{{--   Core JS Files and PerfectScrollbar library inside jquery.ui   --}}
-<script src={{ asset('theme/js/jquery.min.js') }} type="text/javascript"></script>
-<script src={{ asset('theme/js/jquery-ui.min.js') }} type="text/javascript"></script>
-<script src={{ asset('theme/js/bootstrap.min.js') }} type="text/javascript"></script>
+<!--   Core JS Files and PerfectScrollbar library inside jquery.ui   -->
+<script src="{{ asset('theme/js/jquery.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('theme/js/jquery-ui.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('theme/js/bootstrap.min.js') }}" type="text/javascript"></script>
 
 
-{{--  jasny bootstrap --}}
-<script src={{ asset('theme/js/jasny-bootstrap.min.js') }}></script>
+<!--  Forms Validations Plugin -->
+<script src="{{ asset('theme/js/jquery.validate.min.js') }}"></script>
 
-{{--  Forms Validations Plugin --}}
-<script src={{ asset('theme/js/jquery.validate.min.js') }}></script>
+<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+<script src="{{ asset('theme/js/moment.min.js') }}"></script>
 
-{{--  Plugin for Date Time Picker and Full Calendar Plugin--}}
-<script src={{ asset('theme/js/moment.min.js') }}></script>
+<!--  Date Time Picker Plugin is included in this js file -->
+<script src="{{ asset('theme/js/bootstrap-datetimepicker.js') }}"></script>
 
-{{--  Date Time Picker Plugin is included in this js file --}}
-<script src={{ asset('theme/js/bootstrap-datetimepicker.js') }}></script>
+<!--  Select Picker Plugin -->
+<script src="{{ asset('theme/js/bootstrap-selectpicker.js') }}"></script>
 
-{{--  Select Picker Plugin --}}
-<script src={{ asset('theme/js/bootstrap-selectpicker.js') }}></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<!--  Checkbox, Radio, Switch and Tags Input Plugins -->
+<script src="{{ asset('theme/js/bootstrap-checkbox-radio-switch-tags.js') }}"></script>
 
-{{--  Checkbox, Radio, Switch and Tags Input Plugins --}}
-<script src={{ asset('theme/js/bootstrap-checkbox-radio-switch-tags.js') }}></script>
+<!--  Charts Plugin -->
+<script src="{{ asset('theme/js/chartist.min.js') }}"></script>
 
-{{--  Charts Plugin --}}
-<script src={{ asset('theme/js/chartist.min.js') }}></script>
+<!--  Notifications Plugin    -->
+<script src="{{ asset('theme/js/bootstrap-notify.js') }}"></script>
 
-{{--  Notifications Plugin    --}}
-<script src={{ asset('theme/js/bootstrap-notify.js') }}></script>
+<!-- Sweet Alert 2 plugin -->
+<script src="{{ asset('theme/js/sweetalert2.js') }}"></script>
 
-{{-- Sweet Alert 2 plugin --}}
-<script src={{ asset('theme/js/sweetalert2.js') }}></script>
+<!-- Vector Map plugin -->
+<script src="{{ asset('theme/js/jquery-jvectormap.js') }}"></script>
 
-{{-- Vector Map plugin --}}
-<script src={{ asset('theme/js/jquery-jvectormap.js') }}></script>
-
-{{--  Google Maps Plugin    --}}
+<!--  Google Maps Plugin    -->
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 
-{{-- Wizard Plugin    --}}
-<script src={{ asset('theme/js/jquery.bootstrap.wizard.min.js') }}></script>
+<!-- Wizard Plugin    -->
+<script src="{{ asset('theme/js/jquery.bootstrap.wizard.min.js') }}"></script>
 
-{{--  bootstrap Table Plugin    --}}
-<script src={{ asset('theme/js/bootstrap-table.js') }}></script>
+<!--  bootstrap Table Plugin    -->
+<script src="{{ asset('theme/js/bootstrap-table.js') }}"></script>
 
-{{--  Plugin for DataTables.net  --}}
-<script src={{ asset('theme/js/jquery.datatables.js') }}></script>
-
-
-{{--  Full Calendar Plugin    --}}
-<script src={{ asset('theme/js/fullcalendar.min.js') }}></script>
-
-{{-- Light Bootstrap Dashboard Core javascript and methods --}}
-<script src={{ asset('theme/js/light-bootstrap-dashboard.js') }}></script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
+<!--  Plugin for DataTables.net  -->
+<script src="{{ asset('theme/js/jquery.datatables.js') }}"></script>
 
 
-        ko.bindingHandlers.datepicker = {
-            init: function(element, valueAccessor, allBindingsAccessor) {
-                //initialize datepicker with some optional options
-                let options = allBindingsAccessor().datepickerOptions || {};
-                $(element).datetimepicker(options);
+<!--  Full Calendar Plugin    -->
+<script src="{{ asset('theme/js/fullcalendar.min.js') }}"></script>
 
-                //when a user changes the date, update the view model
-                ko.utils.registerEventHandler(element, "changeDate", function(event) {
-                    let value = valueAccessor();
-                    if (ko.isObservable(value)) {
-                        value(event.date);
-                    }
-                });
-            },
-            update: function(element, valueAccessor)   {
-                let widget = $(element).data("datepicker");
-                //when the view model is updated, update the widget
-                if (widget) {
-                    widget.date = ko.utils.unwrapObservable(valueAccessor());
-                    if (widget.date) {
-                        widget.setValue();
-                    }
-                }
-            }
-        };
+<script src="{{ asset('js/jasny-bootstrap/js/jasny-bootstrap.min.js') }}"></script>
 
-
-        $('.select2').select2();
-        $('.datepicker').datetimepicker({
-            format: 'YYYY-MM-DD'
-        });
-    });
-    serialize = function(obj, prefix) {
-        let str = [], p;
-        for(p in obj) {
-            if (obj.hasOwnProperty(p)) {
-                var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
-                str.push((v !== null && typeof v === "object") ?
-                    serialize(v, k) :
-                encodeURIComponent(k) + "=" + encodeURIComponent(v));
-            }
-        }
-        return str.join("&");
-    };
-</script>
+<!-- Light Bootstrap Dashboard Core javascript and methods -->
+<script src="{{ asset('theme/js/light-bootstrap-dashboard.js') }}"></script>
 
 @stack('scripts')
+</body>
 </html>

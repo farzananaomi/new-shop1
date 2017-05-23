@@ -24,6 +24,10 @@ class InvoiceREpository implements PaginatedResultInterface, RawQueryBuilderOutp
     {
         return Invoice::find($id);
     }
+    public function all()
+    {
+        return Invoice::all();
+    }
 
     public function store($data)
     {

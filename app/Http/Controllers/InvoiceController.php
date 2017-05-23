@@ -20,7 +20,8 @@ class InvoiceController extends Controller
     }
     public function index(InvoiceDatatable $datatable)
     {
-        return $datatable->render('invoices.index');
+        $invoices = $this->invoices->all();
+        return $datatable->render('invoices.index', compact('invoices'));
     }
 
     public function create()
@@ -32,7 +33,7 @@ class InvoiceController extends Controller
     {
         $data = $request->all();
         $invoice = $this->invoices->store($data);
-        return redirect()->route('stocks.index');
+        return redirect()->route('invoices.index');
     }
 
     public function show($id)

@@ -20,17 +20,24 @@ class CategoryRepository implements PaginatedResultInterface, RawQueryBuilderOut
 
         return $this->output($categories);
     }
-
+    public function lists()
+    {
+        return Category::pluck('name', 'id');
+    }
     public function find($id)
     {
         return Category::find($id);
+    }
+    public function all()
+    {
+        return Category::all();
     }
 
     public function store($data)
     {
         $category             = new Category();
-        $category->title      = $data['title'];
-        $category->desciption = $data['desciption'];
+        $category->name      = $data['name'];
+        $category->description = $data['description'];
 
         $category->save();
 

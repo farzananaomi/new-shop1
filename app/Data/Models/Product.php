@@ -36,4 +36,9 @@ class Product extends Model
      * @var string
      */
     protected $table = 'products';
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }
