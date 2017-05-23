@@ -40,6 +40,10 @@ class ProductDatatable extends DataTable
             ->addColumn('action', function ($product) {
                 return view('products.action', compact('product'))->render();
             })
+
+            ->addColumn('category_id', function ($m) {
+                return $m->category ? $m->category->name : '';
+            })
             ->make(true);
 
         /**
@@ -84,10 +88,10 @@ class ProductDatatable extends DataTable
     protected function getColumns()
     {
         return [
-            [ 'name' => 'products.category_id', 'data' => 'category_id', 'title' => 'Product Name' ],
+            [ 'name' => 'products.category_id', 'data' => 'category_id', 'title' => 'Category Name' ],
             [ 'name' => 'products.product_name', 'data' => 'product_name', 'title' => 'Product Name' ],
             [ 'name' => 'products.product_code', 'data' => 'product_code', 'title' => 'Product Code' ],
-            [ 'name' => 'products.unit_price', 'data' => 'unit_price', 'title' => 'Unit Price' ],
+            [ 'name' => 'products.unit_price', 'data' => 'unit_price', 'title' => 'Unit Price(Taka)' ],
 
         ];
     }

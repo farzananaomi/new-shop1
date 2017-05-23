@@ -68,7 +68,7 @@
             type: "get",
             success: function (result) {
                 for (i = 0; i < result.length; i++) {
-                    $('#entity_id').append('<option value="' + result[i].id + '">' + result[i].text + '</option>');
+                    $('#product_id').append('<option value="' + result[i].id + '">' + result[i].text + '</option>');
                 }
             },
             error: function (xhr) {
