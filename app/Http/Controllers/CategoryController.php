@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Data\Repositories\CategoryRepository;
-
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PDF;
 
 class CategoryController extends Controller
 {
@@ -40,19 +40,28 @@ class CategoryController extends Controller
         return redirect()->route('categories.index');
     }
 
-    /**
-     * Display the specified Zone.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $category = $this->categories->find($id);
 
-        return view('category.show', compact('category'));
+        if ($request->input('action') == 'export') {
+            $now = Carbon::now()->toDateTimeString();
+
+            $pdf = PDF::loadView('categories.export', compact('category'))->setPaper('a4')
+                      ->setOption('footer-font-size', '9')
+                      ->setOption('footer-left', "This document was electronically generated.\nEmployee Information Form - Revision 3.0")
+                      ->setOption('footer-right', 'Timestamp: ' . $now)
+                      ->setOption('footer-center', '[page]');
+
+            $pdf->snappy()->setTemporaryFolder(storage_path('app'));
+            return $pdf->inline("{$category->category_id}.pdf");
+
+            //return view('categories.export', compact('category'));
+        }
+
+        return view('categories.show', compact('category'));
     }
+
 
    /* public function edit($id)
     {
