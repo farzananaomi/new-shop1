@@ -18,7 +18,9 @@ class CreateCategoriesTable extends Migration
 
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
+            $table->text('description');
+            $table->enum('type', ['main', 'sub-category']);
+            $table->unsignedInteger('parent_id')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

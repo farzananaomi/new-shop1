@@ -17,11 +17,14 @@ class CreateStocksTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->unsignedInteger('category_id');
-            $table->unsignedInteger('product_id');
-            $table->integer('stock_in');
-            $table->integer('sold');
-            $table->integer('stock_out');
+            $table->unsignedInteger('user_id');
+
+            $table->decimal('buying_price',8,2);
+            $table->decimal('sell_price',8,2);
+            $table->string('profit_percent');
+            $table->string('discount_percent');
+            $table->string('discount_percent');
+            $table->string('flat_discount');
 
             $table->softDeletes();
             $table->timestamps();

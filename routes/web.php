@@ -27,4 +27,5 @@ Route::group([ 'middleware' => 'auth:web', ], function () {
     Route::get('images/{template}/{filename}', [
         'uses' => '\Intervention\Image\ImageCacheController@getResponse',
         'as'   => 'imagecache' ])->where([ 'filename' => '[ \w\\.\\/\\-\\@]+' ]);
+    Route::get('pdfview',array('as'=>'pdfview','uses'=>'InvoiceController@pdfview'));
 });

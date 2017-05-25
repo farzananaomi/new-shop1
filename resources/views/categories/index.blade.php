@@ -28,7 +28,7 @@
         @foreach($categories as $category)
             <div class="mdl-card mdl-cell mdl-cell--3-col mdl-cell--6-col-tablet mdl-cell--12-col-phone mdl-shadow--2dp">
                 <div class="mdl-card__title">
-                    <h2 class="mdl-card__title-text">{{ $category->name }}</h2>
+                    <h2 class="mdl-card__title-text"> </h2>
                 </div>
                 <div class="mdl-card__supporting-text">
                     {{ $category->description }}
