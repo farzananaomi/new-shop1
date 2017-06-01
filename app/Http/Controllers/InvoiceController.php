@@ -40,6 +40,7 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        dd($data);
         $invoice = $this->invoices->store($data);
         return redirect()->route('invoices.index');
     }
@@ -51,15 +52,15 @@ class InvoiceController extends Controller
         return view('invoices.show', compact('invoice'));
     }*/
     public function show($id,Request $request)
-    {   $category = $this->categories->find($id);
+    {   $invoice = $this->invoices->find($id);
 
         if($request->has('download')){
             $now = Carbon::now()->toDateTimeString();
-            $pdf = PDF::loadView('categories.export', compact('category'));
+            $pdf = PDF::loadView('invoices.export', compact('invoice'));
             return $pdf->download("invoice.pdf");
         }
 
-        return view('categories.show', compact('category'));
+        return view('invoices.show', compact('invoice'));
     }
 
     public function edit($id)

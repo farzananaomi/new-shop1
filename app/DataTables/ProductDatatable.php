@@ -90,8 +90,8 @@ class ProductDatatable extends DataTable
         return [
             [ 'name' => 'products.category_id', 'data' => 'category_id', 'title' => 'Category Name' ],
             [ 'name' => 'products.product_name', 'data' => 'product_name', 'title' => 'Product Name' ],
-            [ 'name' => 'products.product_code', 'data' => 'product_code', 'title' => 'Product Code' ],
-            [ 'name' => 'products.unit_price', 'data' => 'unit_price', 'title' => 'Unit Price(Taka)' ],
+            [ 'name' => 'products.description', 'data' => 'description', 'title' => 'Product description' ],
+            [ 'name' => 'products.size', 'data' => 'size', 'title' => 'Size' ],
 
         ];
     }

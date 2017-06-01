@@ -17,15 +17,27 @@ class CreateInvoicesTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->unsignedInteger('customer_id');
-            $table->unsignedInteger('product_id');
-            $table->decimal('quantity', 5, 2)->default(1);
 
+            $table->unsignedInteger('product_id');
+            $table->string('invoice_no');
+            $table->string('customer_name');
+            $table->string('customer_address');
+            $table->string('customer_contact');
+            $table->date('invoice_date');
+            $table->enum('status', ['Cash', 'Card', 'Others']);
+            $table->string('quantity');
+            $table->string('unit_price');
+            $table->string('net_price');
+            $table->string('vat');
+            $table->string('discount');
+            $table->string('total');
+            $table->string('sub_total');
 
             $table->softDeletes();
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

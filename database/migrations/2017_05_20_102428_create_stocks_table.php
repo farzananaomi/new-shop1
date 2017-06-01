@@ -17,14 +17,22 @@ class CreateStocksTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('supplier_id')->nullable();
+            $table->unsignedInteger('product_id')->nullable();
+            $table->decimal('buying_price', 8, 2)->nullable();
+            $table->decimal('sell_price', 8, 2)->nullable();
+            $table->string('profit_percent')->nullable();
+            $table->string('discount_percent')->nullable();
+            $table->string('flat_discount')->nullable();
+            $table->string('vat_rate')->nullable();
+            $table->string('vat_total')->nullable();
+            $table->decimal('sub_total', 5, 2)->nullable();
+            $table->string('stock_in')->nullable();
+            $table->string('stock_out')->nullable();
+            $table->string('stock_balance')->nullable();
 
-            $table->decimal('buying_price',8,2);
-            $table->decimal('sell_price',8,2);
-            $table->string('profit_percent');
-            $table->string('discount_percent');
-            $table->string('discount_percent');
-            $table->string('flat_discount');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

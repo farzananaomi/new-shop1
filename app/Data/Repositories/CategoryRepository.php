@@ -13,7 +13,7 @@ use App\Data\Repositories\Traits\RawQueryBuilderOutputTrait;
 class CategoryRepository implements PaginatedResultInterface, RawQueryBuilderOutputInterface
 {
     use ProcessOutputTrait, PaginatedOutputTrait, RawQueryBuilderOutputTrait;
-
+    const DEFAULT_OPERATION_ID = 1;
     public function search($filter = [])
     {
         $categories = Category::query();
@@ -22,7 +22,11 @@ class CategoryRepository implements PaginatedResultInterface, RawQueryBuilderOut
     }
     public function lists()
     {
-        return Category::pluck('name', 'id');
+        return Category::where('parent_id',0)->pluck('name', 'id');
+    }
+    public function sub_lists($id)
+    {
+        return Category::where('parent_id',$id)->pluck('name', 'id');
     }
     public function find($id)
     {
@@ -30,13 +34,36 @@ class CategoryRepository implements PaginatedResultInterface, RawQueryBuilderOut
     }
     public function all()
     {
-        return Category::all();
+        return Category::where('type', '=', 'main')
+            ->with('subCategories')
+            ->get();
+    }
+    public function listMainCategories()
+    {
+        return Category::where('type', '=', 'main')->pluck('name', 'id');
+    }
+
+    public function listSubCategories($id)
+    {
+        $category = Category::where('id', '=', $id)->pluck('name', 'id')->toArray();
+        $subCategories = Category::where('parent_id', '=', $id)->pluck('name', 'id')->toArray();
+
+        return $category + $subCategories;
     }
 
     public function store($data)
     {
-        $category             = new Category();
-        $category->name      = $data['name'];
+        $parentId = sanitize(@$data['parent_id'], self::DEFAULT_OPERATION_ID);
+        if (sanitize(@$data['type'], 'main') == 'main') {
+            $parentId = self::DEFAULT_OPERATION_ID;
+        } else {
+            $parentId = $parentId;
+        }
+
+        $category              = new Category;
+        $category->name        = $data['name'];
+        $category->parent_id   = $parentId;
+        $category->type        = $data['type']; 'main';
         $category->description = $data['description'];
 
         $category->save();

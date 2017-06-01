@@ -25,6 +25,7 @@ class StockRepository implements PaginatedResultInterface, RawQueryBuilderOutput
     {
         return Stock::find($id);
     }
+
     public function all()
     {
         return Stock::all();
@@ -32,13 +33,19 @@ class StockRepository implements PaginatedResultInterface, RawQueryBuilderOutput
 
     public function store($data)
     {
-        $stock              = new Stock();
-        $stock->category_id = $data['category_id'];
-        $stock->product_id  = $data['product_id'];
-        $stock->stock_in    = $data['stock_in'];
-        $stock->sold        = $data['sold'];
-        $stock->stock_out   = $data['stock_in']-$data['sold'];
-
+        $stock = new Stock();
+        $stock->user_id = $data['user_id'];
+        $stock->buying_price = $data['buying_price'];
+        $stock->sell_price = $data['sell_price'];
+        $stock->profit_percent = $data['profit_percent'];
+        $stock->discount_percent = $data['discount_percent'];
+        $stock->flat_discount = $data['flat_discount'];
+        $stock->vat_rate = $data['vat_rate'];
+        $stock->vat_total = $data['vat_total'];
+        $stock->sub_total = $data['sub_total'];
+        $stock->stock_in = $data['stock_in'];
+        $stock->stock_out = $data['stock_out'];
+        $stock->stock_balance = $data['stock_balance'];
 
         $stock->save();
 

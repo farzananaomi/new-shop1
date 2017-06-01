@@ -44,7 +44,7 @@
                                         <table class="table table-bordered">
                                             <thead class="text-primary">
                                             <tr>
-                                                <th>Product Name</th>
+                                                <th>Product ID</th>
                                                 <th>Quantity</th>
                                                 <th>Unit Price</th>
                                                 <th>Vat(%)</th>
@@ -53,19 +53,18 @@
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>@include('partials.bs_table', ['name' => 'product_name',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                                <td>@include('partials.bs_table', ['name' => 'quantity',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                                <td>@include('partials.bs_table', ['name' => 'unit_price',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                                <td>@include('partials.bs_table', ['name' => 'vat',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                                <td>@include('partials.bs_table', ['name' => 'discount',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
+                                                <td>@include('partials.bs_table', ['name' => 'items[1][product_id]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
+                                                <td>@include('partials.bs_table', ['name' => 'items[1][quantity]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
+                                                <td>@include('partials.bs_table', ['name' => 'items[1][unit_price]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
+                                                <td>@include('partials.bs_table', ['name' => 'items[1][vat]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
+                                                <td>@include('partials.bs_table', ['name' => 'items[1][discount]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
 
                                             </tr>
+                                            <input type="text" hidden="hidden" value="1" id="countexp" name="countexp"/>
+                                            <tbody id="exp" name="exp"></tbody>
 
+                                            <tr><td></td><td><input  type="button" id="2" value="+ Add More"  onclick="addExp()"/></td></tr>
 
-                                            <tr>
-                                                <td><button onclick="myFunction()">Click me</button></td>
-                                               <td><p id="demo"></p></td>
-                                            </tr>
                                             </tbody>
                                         </table>
 
@@ -85,7 +84,7 @@
             <div class="form-group">
                 <label class="col-md-3"></label>
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-fill btn-danger">Save</button>
+                    <button type="submit" class="btn btn-fill btn-danger" style="width: 100px">Save</button>
                     <a href="{{ route('invoices.index') }}"
                        class="btn btn-fill btn-warning pull-right"><i class="fa fa-arrow-left"></i> Cancel</a>
                 </div>
@@ -103,8 +102,26 @@
             format: 'YYYY-MM-DD'
         }
     );
-    function myFunction() {
-        document.getElementById("demo").innerHTML = "Hello World";
+    var countBox =2;
+
+    function addExp()
+    {
+        document.getElementById("countexp").value= countBox;
+
+        var newChild = document.createElement("tr");
+        document.getElementById("countexp").value= countBox;
+
+        $("#exp").append(
+            "<tr>" +
+                "<td><input type='text' id='items["+ countBox +"][product_id]' name='items["+ countBox+"][product_id]'/></td>" +
+                "<td><input type='text' id='items["+ countBox +"][quantity]' name='items["+ countBox +"][quantity]'/></td>" +
+                "<td><input type='text' id='items["+ countBox +"][unit_price]' name='items["+ countBox +"][unit_price]'/></td>" +
+                "<td><input type='text' id='items["+ countBox +"][vat]"+countBox +"' name='items["+ countBox +"][vat]'/></td>" +
+                "<td><input type='text' id='items["+ countBox +"][discount]' name='items["+ countBox +"][discount]'/></td>" +
+            "</tr>");
+
+        countBox += 1;
     }
 </script>
 @endpush
+

@@ -17,11 +17,10 @@ class CreateProductsTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->unsignedInteger('category_id');
-            $table->unsignedInteger('stock_id');
-            $table->string('product_name');
-            $table->string('description');
-            $table->string('unit_price');
+            $table->unsignedInteger('category_id')->nullable();
+            $table->string('product_name')->nullable();
+            $table->string('description')->nullable();
+            $table->string('size')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

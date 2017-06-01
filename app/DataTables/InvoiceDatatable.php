@@ -3,7 +3,7 @@
 namespace App\DataTables;
 
 
-use App\Data\Repositories\InvoiceREpository;
+use App\Data\Repositories\InvoiceRepository;
 use Illuminate\Contracts\view\Factory;
 use Yajra\Datatables\Datatables;
 use Yajra\Datatables\Services\DataTable;
@@ -79,7 +79,7 @@ class InvoiceDatatable extends DataTable
     protected function getColumns()
     {
         return [
-            [ 'name' => 'invoices.product_name', 'data' => 'product_name', 'title' => 'Product Name' ],
+            [ 'name' => 'invoices.product_id', 'data' => 'product_id', 'title' => 'Product ID' ],
             [ 'name' => 'invoices.quantity', 'data' => 'quantity', 'title' => 'Quantity' ],
             [ 'name' => 'invoices.unit_price', 'data' => 'unit_price', 'title' => 'Unit Price' ],
             [ 'name' => 'invoices.net_price', 'data' => 'net_price', 'title' => 'Net Price' ],
