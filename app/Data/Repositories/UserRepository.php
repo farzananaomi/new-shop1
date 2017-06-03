@@ -43,5 +43,9 @@ class UserRepository implements PaginatedResultInterface, RawQueryBuilderOutputI
         return $user;
 
     }
+    public function supplier_lists()
+    {
+        return User::where('role','supplier')->pluck('name', 'id');
+    }
 
 }

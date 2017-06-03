@@ -17,22 +17,23 @@ class CreateInvoicesTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
+               $table->string('invoice_no')->default(0)->nullable();
+            $table->integer('customer_id')->default(0)->nullable();
+            $table->date('invoice_date')->default(date('Y-m-d H:i:s'))->nullable();
 
-            $table->unsignedInteger('product_id');
-            $table->string('invoice_no');
-            $table->string('customer_name');
-            $table->string('customer_address');
-            $table->string('customer_contact');
-            $table->date('invoice_date');
-            $table->enum('status', ['Cash', 'Card', 'Others']);
-            $table->string('quantity');
-            $table->string('unit_price');
-            $table->string('net_price');
-            $table->string('vat');
-            $table->string('discount');
-            $table->string('total');
-            $table->string('sub_total');
-
+            $table->decimal('quantity',15,3)->default(0)->nullable();
+            $table->decimal('total',15,3)->default(0)->nullable();
+            $table->decimal('vat_rate',15,3)->default(0)->nullable();
+            $table->decimal('vat_total',15,3)->default(0)->nullable();
+            $table->decimal('discount',15,3)->default(0)->nullable();
+            $table->decimal('ground_total',15,3)->default(0)->nullable();
+            $table->decimal('round_total',15,3)->default(0)->nullable();
+            $table->enum('payment_type', ['Cash', 'Card', 'both'])->default('Cash')->nullable();
+            $table->tinyInteger('status')->nullable()->default(0);
+            $table->string('card_type')->nullable()->default('');
+            $table->decimal('bank_amount',15,3)->default(0)->nullable();
+            $table->decimal('cash_amount',15,3)->default(0)->nullable();
+            $table->tinyInteger('payment_status')->default(0)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

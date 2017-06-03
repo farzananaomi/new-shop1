@@ -12,13 +12,13 @@
                             <div class="row">
                                 <div class="col-xs-6">
                                     @include('partials.bs_text', ['name' => 'customer_name', 'label' => 'Full Name', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
-                                    @include('partials.bs_text', ['name' => 'customer_contact', 'label' => 'Contact', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
-                                    @include('partials.bs_textarea', ['name' => 'customer_address', 'label' => 'Address', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
+                                    @include('partials.bs_text', ['name' => 'mobile_no', 'label' => 'Contact', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
+                                    @include('partials.bs_textarea', ['name' => 'address', 'label' => 'Address', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
                                 </div>
                                 <div class="col-xs-6">
                                     @include('partials.bs_text', ['name' => 'invoice_no', 'label' => 'Invoice No', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
                                     @include('partials.bs_date', ['name' => 'invoice_date',  'label' => 'Invoice Date', 'useOld' => '','horizontal' => 'true', 'extras' => 'data-bind="text: dob"',])
-                                    @include('partials.selectpicker', ['name' => 'status',  'label' => 'Payment Type',  'options' =>['Cash', 'Card', 'Others'], 'horizontal' => 'true','useKeys' => false,'useOld' => '',])
+                                    @include('partials.selectpicker', ['name' => 'status',  'label' => 'Payment Type',  'options' =>['Cash', 'Card', 'Both'], 'horizontal' => 'true','useKeys' => false,'useOld' => '',])
 
                                 </div>
                             </div>
@@ -49,26 +49,28 @@
                                                 <th>Unit Price</th>
                                                 <th>Vat(%)</th>
                                                 <th>Discount(%)</th>
+                                                <th>Total</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="exp" name="exp">
                                             <tr>
                                                 <td>@include('partials.bs_table', ['name' => 'items[1][product_id]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
                                                 <td>@include('partials.bs_table', ['name' => 'items[1][quantity]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
                                                 <td>@include('partials.bs_table', ['name' => 'items[1][unit_price]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                                <td>@include('partials.bs_table', ['name' => 'items[1][vat]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
+                                                <td>@include('partials.bs_table', ['name' => 'items[1][vat_total]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
                                                 <td>@include('partials.bs_table', ['name' => 'items[1][discount]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-
+                                                <td>@include('partials.bs_table', ['name' => 'items[1][ground_total]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
                                             </tr>
                                             <input type="text" hidden="hidden" value="1" id="countexp" name="countexp"/>
-                                            <tbody id="exp" name="exp"></tbody>
 
-                                            <tr><td></td><td><input  type="button" id="2" value="+ Add More"  onclick="addExp()"/></td></tr>
 
                                             </tbody>
                                         </table>
 
                                     </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <input type="button" id="2" value="+ Add More" onclick="addExp()"/>
                                 </div>
                             </div>
                         </div>
@@ -102,22 +104,22 @@
             format: 'YYYY-MM-DD'
         }
     );
-    var countBox =2;
+    var countBox = 2;
 
-    function addExp()
-    {
-        document.getElementById("countexp").value= countBox;
+    function addExp() {
+        document.getElementById("countexp").value = countBox;
 
         var newChild = document.createElement("tr");
-        document.getElementById("countexp").value= countBox;
+        document.getElementById("countexp").value = countBox;
 
         $("#exp").append(
             "<tr>" +
-                "<td><input type='text' id='items["+ countBox +"][product_id]' name='items["+ countBox+"][product_id]'/></td>" +
-                "<td><input type='text' id='items["+ countBox +"][quantity]' name='items["+ countBox +"][quantity]'/></td>" +
-                "<td><input type='text' id='items["+ countBox +"][unit_price]' name='items["+ countBox +"][unit_price]'/></td>" +
-                "<td><input type='text' id='items["+ countBox +"][vat]"+countBox +"' name='items["+ countBox +"][vat]'/></td>" +
-                "<td><input type='text' id='items["+ countBox +"][discount]' name='items["+ countBox +"][discount]'/></td>" +
+            "<td><input type='text'  class='form-control'   id='items[" + countBox + "][product_id]' name='items[" + countBox + "][product_id]'/></td>" +
+            "<td><input type='text'  class='form-control'  id='items[" + countBox + "][quantity]' name='items[" + countBox + "][quantity]'/></td>" +
+            "<td><input type='text'  class='form-control'  id='items[" + countBox + "][unit_price]' name='items[" + countBox + "][unit_price]'/></td>" +
+            "<td><input type='text'  class='form-control'  id='items[" + countBox + "][vat_total]" + countBox + "' name='items[" + countBox + "][vat_total]'/></td>" +
+            "<td><input type='text'  class='form-control'  id='items[" + countBox + "][discount]' name='items[" + countBox + "][discount]'/></td>" +
+            "<td><input type='text'  class='form-control'  id='items[" + countBox + "][ground_total]' name='items[" + countBox + "][ground_total]'/></td>" +
             "</tr>");
 
         countBox += 1;

@@ -10,7 +10,7 @@ class AuthController extends Controller
     public function postLogin(LoginRequest $request)
     {
         if (auth('web')->attempt($request->only('name', 'password'))) {
-            return redirect()->intended(route('invoices.index'));
+            return redirect()->intended(route('categories.index'));
         }
 
         return redirect()->route('auth.login')->withErrors([

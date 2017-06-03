@@ -34,18 +34,20 @@ class StockRepository implements PaginatedResultInterface, RawQueryBuilderOutput
     public function store($data)
     {
         $stock = new Stock();
-        $stock->user_id = $data['user_id'];
+        $stock->product_id = $data['product_id'];
+        $stock->supplier_id = $data['supplier_id'];
+        $stock->created_by = $data['created_by'];
         $stock->buying_price = $data['buying_price'];
-        $stock->sell_price = $data['sell_price'];
         $stock->profit_percent = $data['profit_percent'];
+        $stock->sell_price = ($stock->buying_price *($stock->profit_percent/100))+$stock->buying_price;
         $stock->discount_percent = $data['discount_percent'];
         $stock->flat_discount = $data['flat_discount'];
         $stock->vat_rate = $data['vat_rate'];
-        $stock->vat_total = $data['vat_total'];
-        $stock->sub_total = $data['sub_total'];
+        $stock->vat_total = $stock->sell_price *($stock->vat_rate/100);
+        $stock->sub_total = $stock->vat_total + $stock->sell_price ;
         $stock->stock_in = $data['stock_in'];
         $stock->stock_out = $data['stock_out'];
-        $stock->stock_balance = $data['stock_balance'];
+        $stock->stock_balance = $stock->stock_in - $stock->stock_out;
 
         $stock->save();
 

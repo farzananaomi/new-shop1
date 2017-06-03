@@ -1,4 +1,3 @@
-
 @extends('layouts.base')
 @section('content')
     <form action="{{ route('stocks.store') }}" method="post" enctype="multipart/form-data">
@@ -13,30 +12,30 @@
                                 <div class="col-xs-12">
                                     {{-- @include('partials.selectpicker', ['name' => 'category_id', 'model' => 'stocks.category_id',  'horizontal' => 'true','label' => 'Category', 'options' => [], 'useKeys' => true,  'useOld' => ''])--}}
                                     <div class="form-group">
-                                        <label for="category_id_h" class="col-sm-3 control-label">Category</label>
+                                        <label for="category_id_h0" class="col-sm-3 control-label">Category</label>
                                         <div class="col-sm-8">
-
-
-                                            <select class="form-control select2" id="category_id_h" name="category_id_h"
-                                                    onchange="load_subcategory();">
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" id="sub_category">
-                                        <label for="sub_category_id" class="col-sm-3 control-label">Sub Category</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control select2" id="sub_category_id"
-                                                    name="sub_category_id" onchange="set_category();">
-                                            </select>
                                             <input type="hidden" name="category_id" id="category_id"
-                                                   style="display: none" value="0">
+                                                   style="display: none"   value="0">
+                                            <input type="hidden" name="increment_id" id="increment_id"
+                                                   style="display: none" value="1">
+                                            <select class="form-control select2" id="category_id_h0"
+                                                    name="category_id_h[0]"
+                                                    onchange="set_empty();set_category(this);">
+
+                                            </select>
                                         </div>
                                     </div>
+                                    <div id="div_sub_category"></div>
+
                                     @include('partials.selectpicker', ['name' => 'product_id', 'model' => 'stocks.product_id',  'horizontal' => 'true','label' => 'Product Name', 'options' => [], 'useKeys' => true,  'useOld' => ''])
                                     @include('partials.selectpicker', ['name' => 'supplier_id', 'model' => 'stocks.supplier_id',  'horizontal' => 'true','label' => 'Supplier  Name', 'options' => [], 'useKeys' => true,  'useOld' => ''])
-                                    @include('partials.bs_text', ['name' => 'stock_in', 'label' => 'stock In', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
-                                    @include('partials.bs_text', ['name' => 'sold', 'label' => 'Sold', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
+                                    @include('partials.bs_text', ['name' => 'buying_price', 'label' => 'Buying Price', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
+                                    @include('partials.bs_text', ['name' => 'profit_percent', 'label' => 'Profit percent', 'useOld' => '', 'horizontal' => 'true', ])
+                                    @include('partials.bs_text', ['name' => 'discount_percent', 'label' => 'Discount Percent', 'useOld' => '', 'horizontal' => 'true',])
+                                    @include('partials.bs_text', ['name' => 'flat_discount', 'label' => 'Flat Discount', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
+                                    @include('partials.bs_text', ['name' => 'vat_rate', 'label' => 'Vat Rate', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
+                                    @include('partials.bs_text', ['name' => 'stock_in', 'label' => 'Quantity', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
+                                    @include('partials.bs_text', ['name' => 'stock_out', 'label' => 'Stock Out', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
 
                                 </div>
                             </div>
@@ -45,7 +44,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="form-group">
                 <label class="col-md-3"></label>
@@ -68,22 +66,25 @@
         Supplier_select();
     });
 
-
-
-    function set_category() {
-        var category_id = $("#sub_category_id").val();
-        $("#category_id").val(category_id);
+    var increment_id = 1;
+    function set_empty() {
+        document.getElementById('div_sub_category').innerHTML = "";
+    }
+    function set_category(evn) {
+        var values = evn.value;
+      //  alert('val ' + values);
+        $("#category_id").val(values);
+        load_subcategory();
     }
 
     function category_select() {
-        $("#sub_category").hide();
         $.ajax({
             url: "{{ route('ajax.category') }}",
             type: "get",
             success: function (result) {
-                document.getElementById('category_id_h').innerHTML = "";
+                //  document.getElementById('category_id_h[0]').innerHTML = "";
                 for (i = 0; i < result.length; i++) {
-                    $('#category_id_h').append('<option value="' + result[i].id + '">' + result[i].text + '</option>');
+                    $("#category_id_h0").append('<option value="' + result[i].id + '">' + result[i].text + '</option>');
                 }
                 /*
                  $('#category_id')
@@ -95,23 +96,33 @@
         });
     }
     function load_subcategory() {
-        var category_id = $("#category_id_h").val();
-        $("#category_id").val(category_id);
-        $("#sub_category").show();
+        var category_id = $("#category_id").val();
         $.ajax({
             url: "{{ route('ajax.sub_category') }}",
             type: "get",
             data: {id: category_id},
             success: function (result) {
-                document.getElementById('sub_category_id').innerHTML = "";
-                for (i = 0; i < result.length; i++) {
-                    $('#sub_category_id').append('<option value="' + result[i].id + '">' + result[i].text + '</option>');
-                }
+                if (result.length != 0) {
+                    var html_string = '<div class="form-group" id="sub_category">' +
+                        '<label for="sub_category_id" class="col-sm-3 control-label">Sub Category</label>' +
+                        '<div class="col-sm-8">' +
+                        '<select class="form-control select2" id="category_id_h' + increment_id + '" name="category_id_h[' + increment_id + ']" onchange="set_category(this);">';
 
-                if (result.length == 0) {
-                    $("#sub_category").hide();
-                }
+                    increment_id = increment_id + 1;
+                    $("#increment_id").val(increment_id);
 
+                    for (i = 0; i < result.length; i++) {
+                        html_string = html_string + '<option value="' + result[i].id + '">' + result[i].text + '</option>';
+                    }
+
+                    html_string = html_string + ' </select> ' +
+                        '</div> ' +
+                        '</div>';
+
+                    $("#div_sub_category").append(html_string);
+                }else{
+                    $("#div_sub_category").append('');
+                }
             },
             error: function (xhr) {
                 alert("An error occured: " + xhr.status + " " + xhr.statusText);

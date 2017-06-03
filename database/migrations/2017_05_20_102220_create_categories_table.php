@@ -17,10 +17,10 @@ class CreateCategoriesTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->string('name')->nullable();
-            $table->text('description')->nullable();
-            $table->enum('type', ['main', 'sub-category'])->nullable();
-            $table->unsignedInteger('parent_id')->nullable();
+            $table->string('name')->default('')->nullable();
+            $table->string('description',1000)->default('')->nullable();
+           // $table->enum('type', ['main', 'sub-category'])->nullable();
+            $table->unsignedInteger('parent_id')->default(0)->nullable();
 
             $table->softDeletes();
             $table->timestamps();

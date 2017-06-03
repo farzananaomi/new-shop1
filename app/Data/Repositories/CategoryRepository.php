@@ -34,8 +34,7 @@ class CategoryRepository implements PaginatedResultInterface, RawQueryBuilderOut
     }
     public function all()
     {
-        return Category::where('type', '=', 'main')
-            ->with('subCategories')
+        return Category::where('parent_id', '=', '0')
             ->get();
     }
     public function listMainCategories()
@@ -63,7 +62,6 @@ class CategoryRepository implements PaginatedResultInterface, RawQueryBuilderOut
         $category              = new Category;
         $category->name        = $data['name'];
         $category->parent_id   = $parentId;
-        $category->type        = $data['type']; 'main';
         $category->description = $data['description'];
 
         $category->save();

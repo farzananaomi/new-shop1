@@ -11,17 +11,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property int $supplier_id
  * @property int $product_id
+ * @property string $barcode_id
  * @property float $buying_price
  * @property float $sell_price
- * @property string $profit_percent
- * @property string $discount_percent
- * @property string $flat_discount
- * @property string $vat_rate
- * @property string $vat_total
+ * @property float $profit_percent
+ * @property float $discount_percent
+ * @property float $flat_discount
+ * @property float $vat_rate
+ * @property float $vat_total
  * @property float $sub_total
- * @property string $stock_in
- * @property string $stock_out
- * @property string $stock_balance
+ * @property float $stock_in
+ * @property float $stock_out
+ * @property float $stock_balance
  * @property string $created_by
  * @property string $updated_by
  * @property string $deleted_at
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $updated_at
  * @property-read \App\Data\Models\Category $category
  * @property-read \App\Data\Models\Product $product
+ * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Stock whereBarcodeId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Stock whereBuyingPrice($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Stock whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Stock whereCreatedBy($value)

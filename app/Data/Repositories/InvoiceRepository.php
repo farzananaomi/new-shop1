@@ -4,13 +4,15 @@ namespace App\Data\Repositories;
 
 use App\Data\Models\Invoice;
 use App\Data\Models\Item;
+use App\Data\Models\Customer;
+Use DB;
 use App\Data\Repositories\Interfaces\PaginatedResultInterface;
 use App\Data\Repositories\Interfaces\RawQueryBuilderOutputInterface;
 use App\Data\Repositories\Traits\PaginatedOutputTrait;
 use App\Data\Repositories\Traits\ProcessOutputTrait;
 use App\Data\Repositories\Traits\RawQueryBuilderOutputTrait;
 
-class InvoiceREpository implements PaginatedResultInterface, RawQueryBuilderOutputInterface
+class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutputInterface
 {
     use ProcessOutputTrait, PaginatedOutputTrait, RawQueryBuilderOutputTrait;
 
@@ -33,47 +35,62 @@ class InvoiceREpository implements PaginatedResultInterface, RawQueryBuilderOutp
 
     public function store($data)
     {
-        $invoice                   = new Invoice();
-        $invoice->customer_name    = $data['customer_name'];
-        $invoice->customer_contact = $data['customer_contact'];
-        $invoice->customer_address = $data['customer_address'];
-        $invoice->invoice_no       = $data['invoice_no'];
-        $invoice->invoice_date     = $data['invoice_date'];
-        $invoice->product_id       = $data['product_id'];
-        $invoice->quantity         = $data['quantity'];
-        $invoice->status           = $data['status'];
-        $invoice->unit_price       = $data['unit_price'];
-        $invoice->net_price        = $data['unit_price'] * $data['quantity'];
-        $invoice->vat              = $data['vat'];
-        $invoice->discount         = $data['discount'];
-        $invoice->total            = (($invoice->net_price) + ($data['vat'] / 100)) - ($data['discount'] / 100);
-        $invoice->sub_total        = $invoice->sum('total');
 
+        $customer = new Customer();
+        $customer->customer_name = sanitize(@$data['customer_name'], '');
+        $customer->mobile_no = sanitize(@$data['mobile_no'], '');
+        $customer->address = sanitize(@$data['address'], '');
+        $customer->save();
+        //var_dump($customer);
+        $invoice = new Invoice();
+        $invoice->customer_id = $customer->id;
+        $invoice->invoice_date = date('Y-m-d H:i:s');
+        $invoice->payment_type = 'Cash';
+        $invoice->card_type = 'bank';
+        $invoice->bank_amount ='1';
+        $invoice->cash_amount = 2;
+        $invoice->payment_status = 1;//sanitize(@$data['payment_status'], 0);
+        $invoice->status =1;// sanitize(@$data['status'], 1);
+       // $invoice->quantity =$data ['quantity'];
+       // $invoice->total =$data ['total'];
+        $invoice->discount = sanitize(@$data['discount'], 0);
+        $invoice->vat_rate = sanitize(@$data['vat_rate'], 0);
+        $invoice->vat_total = sanitize(@$data['vat_total'], 0);
+        $invoice->ground_total = sanitize(@$data['ground_total'], 0);
+        $invoice->round_total = sanitize(@$data['round_total'], 0);
 
         $invoice->save();
+
+        $items = [];
+        foreach ($data['items'] as $val) {
+            $item = new Item();
+            foreach ($val as $key => $value) {
+                $item->$key = $value;
+            }
+            $items[] = $item;
+        }
+
+        try {
+            DB::beginTransaction();
+            if ($invoice->save()) {
+                $invoice->items()->saveMany($items);
+                DB::commit();
+                var_dump($invoice);
+                //return $submission;
+            }
+            DB::rollBack();
+        } catch (Exception $ex) {
+            Logger::debug($ex->getMessage());
+            var_dump($ex->getMessage());
+
+            DB::rollBack();
+
+            return false;
+        }
 
         return $invoice;
 
     }
 
-    public function storeItem($data)
-    {
-        $invoice = Invoice::find($data['id']);
 
-        if (empty($invoice)) {
-            return null;
-        }
-
-        $item             = new Item();
-        $item->product_id = $data['product_id'];
-        $item->quantity   = $data['quantity'];
-        $item->unit_price = $data['unit_price'];
-        $item->vat        = $data['vat'];
-        $item->discount   = $data['discount'];
-
-
-        $invoice->items()->save($item);
-
-        return $item;
-    }
 }

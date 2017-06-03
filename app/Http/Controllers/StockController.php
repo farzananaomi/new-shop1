@@ -31,7 +31,9 @@ class StockController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $data['created_by'] =auth()->user()->id;
         $stock = $this->stocks->store($data);
+        dd($stock);
         return redirect()->route('stocks.index');
     }
 

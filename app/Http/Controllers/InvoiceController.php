@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Data\Repositories\CategoryRepository;
-use App\Data\Repositories\InvoiceREpository;
+use App\Data\Repositories\InvoiceRepository;
 use App\DataTables\InvoiceDatatable;
 use Carbon\Carbon;
 use DB;
@@ -40,7 +40,7 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        dd($data);
+       // dd($data);
         $invoice = $this->invoices->store($data);
         return redirect()->route('invoices.index');
     }

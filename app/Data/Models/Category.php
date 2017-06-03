@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property string $name
  * @property string $description
- * @property string $type
  * @property int $parent_id
  * @property string $deleted_at
  * @property \Carbon\Carbon $created_at
@@ -23,7 +22,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Category whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Category whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Category whereParentId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Category whereType($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Category whereUpdatedAt($value)
  * @mixin \Eloquent
  */
@@ -40,6 +38,6 @@ class Category extends Model
     protected $table = 'categories';
     public function subCategories()
     {
-        return $this->hasMany(Category::class, 'parent_id', 'id')->where('type', '=', 'sub-category');
+        return $this->hasMany(Category::class, 'parent_id', 'id')->where('parent_id', '<>', '0');
     }
 }

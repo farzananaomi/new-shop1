@@ -17,22 +17,23 @@ class CreateStocksTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->unsignedInteger('supplier_id')->nullable();
-            $table->unsignedInteger('product_id')->nullable();
-            $table->decimal('buying_price', 8, 2)->nullable();
-            $table->decimal('sell_price', 8, 2)->nullable();
-            $table->string('profit_percent')->nullable();
-            $table->string('discount_percent')->nullable();
-            $table->string('flat_discount')->nullable();
-            $table->string('vat_rate')->nullable();
-            $table->string('vat_total')->nullable();
-            $table->decimal('sub_total', 5, 2)->nullable();
-            $table->string('stock_in')->nullable();
-            $table->string('stock_out')->nullable();
-            $table->string('stock_balance')->nullable();
+            $table->unsignedInteger('supplier_id')->default(0)->nullable();
+            $table->unsignedInteger('product_id')->default(0)->nullable();
+            $table->string('barcode_id')->default('')->nullable();
+            $table->decimal('buying_price', 15, 3)->default(0)->nullable();
+            $table->decimal('sell_price', 15, 3)->default(0)->nullable();
+            $table->decimal('profit_percent', 15, 3)->default(0)->nullable();
+            $table->decimal('discount_percent', 15, 3)->default(0)->nullable();
+            $table->decimal('flat_discount', 15, 3)->default(0)->nullable();
+            $table->decimal('vat_rate', 15, 3)->default(0)->nullable();
+            $table->decimal('vat_total', 15, 3)->default(0)->nullable();
+            $table->decimal('sub_total',8, 2)->default(0)->nullable();
+            $table->decimal('stock_in', 15, 3)->default(0)->nullable();//default stock_total=stock_balance
+            $table->decimal('stock_out', 15, 3)->default(0)->nullable();//default stock_out 0.
+            $table->decimal('stock_balance', 15, 3)->default(0)->nullable();
 
-            $table->string('created_by')->nullable();
-            $table->string('updated_by')->nullable();
+            $table->string('created_by')->default('')->nullable();
+            $table->string('updated_by')->default('')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

@@ -40,10 +40,10 @@
                         @include('partials.bs_text', ['name' => 'name', 'label' => 'Name', 'extras' => 'required="required"', 'useOld' => ''])
                         @include('partials.bs_email', ['name' => 'email', 'label' => 'Email', 'extras' => 'required="required"', 'useOld' => ''])
                         @include('partials.bs_text', ['name' => 'contact', 'label' => 'Contact', 'extras' => 'required="required"', 'useOld' => ''])
-                        @include('partials.bs_text', ['name' => 'additional_no', 'label' => 'Additinal COntact', 'extras' => 'required="required"', 'useOld' => ''])
+                        @include('partials.bs_text', ['name' => 'additional_no', 'label' => 'Additional Contact', 'extras' => 'required="required"', 'useOld' => ''])
 
                         @include('partials.bs_textarea', ['name' => 'address', 'label' => 'Address', 'extras' => 'required="required"', 'useOld' => ''])
-                        @include('partials.selectpicker', ['name' => 'role', 'label' => 'User Type', 'options' =>['admin', 'salesman', 'supplier', 'employee'], 'useKeys' => 'true', 'extras' => 'required="required"'])
+                        @include('partials.selectpicker', ['name' => 'role', 'label' => 'User Type', 'options' =>['Admin', 'Employee', 'Salesman', 'Super','Supplier'], 'useKeys' => 'true', 'extras' => 'required="required"'])
                         @include('partials.bs_text', ['name' => 'username', 'label' => 'Username', 'extras' => 'required="required"', 'useOld' => ''])
                         @include('partials.bs_password', ['name' => 'password', 'label' => 'Password', 'extras' => 'required="required"', 'useOld' => ''])
                         @include('partials.bs_password', ['name' => 'password_confirmation', 'label' => 'Confirm Password', 'extras' => 'required="required"', 'useOld' => ''])

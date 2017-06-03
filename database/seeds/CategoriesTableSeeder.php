@@ -52,8 +52,8 @@ class CategoriesTableSeeder extends Seeder
             $id = DB::table('categories')->insertGetId([
                 'name'        => $category['name'],
                 'description' => $category['description'],
-                'parent_id'   => null,
-                'type'        => 'main',
+                'parent_id'   => 0,
+
             ]);
 
             if (!empty($category['sub_categories'])) {
@@ -62,7 +62,7 @@ class CategoriesTableSeeder extends Seeder
                         'name'        => $category['name'],
                         'description' => $category['description'],
                         'parent_id'   => $id,
-                        'type'        => 'sub-category',
+
                     ]);
                 }
             }

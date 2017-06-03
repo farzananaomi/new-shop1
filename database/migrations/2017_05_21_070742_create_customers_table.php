@@ -17,10 +17,9 @@ class CreateCustomersTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->unsignedInteger('invoice_id')->nullable();
-            $table->string('customer_name')->nullable();
-            $table->string('contact')->nullable();
-            $table->string('address')->nullable();
+            $table->string('customer_name')->default('')->nullable();
+            $table->string('mobile_no')->default('')->nullable();
+            $table->string('address')->default('')->nullable();
 
             $table->softDeletes();
             $table->timestamps();
