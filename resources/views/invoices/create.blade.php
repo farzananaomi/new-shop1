@@ -49,7 +49,6 @@
                                                 <th>Unit Price</th>
                                                 <th>Vat(%)</th>
                                                 <th>Discount(%)</th>
-                                                <th>Total</th>
                                             </tr>
                                             </thead>
                                             <tbody id="exp" name="exp">
@@ -59,7 +58,6 @@
                                                 <td>@include('partials.bs_table', ['name' => 'items[1][unit_price]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
                                                 <td>@include('partials.bs_table', ['name' => 'items[1][vat_total]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
                                                 <td>@include('partials.bs_table', ['name' => 'items[1][discount]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                                <td>@include('partials.bs_table', ['name' => 'items[1][ground_total]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
                                             </tr>
                                             <input type="text" hidden="hidden" value="1" id="countexp" name="countexp"/>
 
@@ -114,12 +112,11 @@
 
         $("#exp").append(
             "<tr>" +
-            "<td><input type='text'  class='form-control'   id='items[" + countBox + "][product_id]' name='items[" + countBox + "][product_id]'/></td>" +
+            "<td><input type='text'  class='form-control'  id='items[" + countBox + "][product_id]' name='items[" + countBox + "][product_id]'/></td>" +
             "<td><input type='text'  class='form-control'  id='items[" + countBox + "][quantity]' name='items[" + countBox + "][quantity]'/></td>" +
             "<td><input type='text'  class='form-control'  id='items[" + countBox + "][unit_price]' name='items[" + countBox + "][unit_price]'/></td>" +
             "<td><input type='text'  class='form-control'  id='items[" + countBox + "][vat_total]" + countBox + "' name='items[" + countBox + "][vat_total]'/></td>" +
             "<td><input type='text'  class='form-control'  id='items[" + countBox + "][discount]' name='items[" + countBox + "][discount]'/></td>" +
-            "<td><input type='text'  class='form-control'  id='items[" + countBox + "][ground_total]' name='items[" + countBox + "][ground_total]'/></td>" +
             "</tr>");
 
         countBox += 1;

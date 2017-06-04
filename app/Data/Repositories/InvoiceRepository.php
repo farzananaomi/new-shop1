@@ -44,6 +44,7 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
         //var_dump($customer);
         $invoice = new Invoice();
         $invoice->customer_id = $customer->id;
+        $invoice->invoice_no=$data['invoice_no'];
         $invoice->invoice_date = date('Y-m-d H:i:s');
         $invoice->payment_type = 'Cash';
         $invoice->card_type = 'bank';
@@ -53,9 +54,10 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
         $invoice->status =1;// sanitize(@$data['status'], 1);
        // $invoice->quantity =$data ['quantity'];
        // $invoice->total =$data ['total'];
-        $invoice->discount = sanitize(@$data['discount'], 0);
-        $invoice->vat_rate = sanitize(@$data['vat_rate'], 0);
-        $invoice->vat_total = sanitize(@$data['vat_total'], 0);
+        $item = new Item();
+        $invoice->discount = $item->discount;
+        $invoice->vat_rate =$item->vat_rate;
+        $invoice->vat_total =$item->sum('vat_total');
         $invoice->ground_total = sanitize(@$data['ground_total'], 0);
         $invoice->round_total = sanitize(@$data['round_total'], 0);
 
@@ -66,6 +68,7 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
             $item = new Item();
             foreach ($val as $key => $value) {
                 $item->$key = $value;
+                $item->ground_total=$item->quantity * $item->unit_price;
             }
             $items[] = $item;
         }

@@ -40,8 +40,9 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-       // dd($data);
+      //  dd($data);
         $invoice = $this->invoices->store($data);
+        dd($invoice);
         return redirect()->route('invoices.index');
     }
 

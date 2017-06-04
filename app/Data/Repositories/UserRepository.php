@@ -28,24 +28,25 @@ class UserRepository implements PaginatedResultInterface, RawQueryBuilderOutputI
 
     public function store($data)
     {
-        $user                   = new User();
-        $user->name    = $data['name'];
-        $user->role = $data['role'];
-        $user->username = $data['username'];
+        $user                = new User();
+        $user->name          = $data['name'];
+        $user->role          = $data['role'];
+        $user->username      = $data['username'];
         $user->contact       = $data['contact'];
-        $user->additional_no     = $data['additional_no'];
+        $user->additional_no = $data['additional_no'];
         $user->address       = $data['address'];
         $user->email         = $data['email'];
-       $user->password = bcrypt($data['password']);;
+        $user->password      = bcrypt($data['password']);;
 
         $user->save();
 
         return $user;
 
     }
+
     public function supplier_lists()
     {
-        return User::where('role','supplier')->pluck('name', 'id');
+        return User::where('role', 'supplier')->pluck('name', 'id');
     }
 
 }

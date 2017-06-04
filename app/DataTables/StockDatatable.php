@@ -3,7 +3,6 @@
 namespace App\DataTables;
 
 
-
 use App\Data\Repositories\StockRepository;
 use Illuminate\Contracts\View\Factory;
 use Yajra\Datatables\Datatables;
@@ -35,6 +34,13 @@ class StockDatatable extends DataTable
             ->eloquent($this->query())
             ->addColumn('action', function ($stock) {
                 return view('stocks.action', compact('stock'))->render();
+            })
+
+            ->addColumn('category_id', function ($m) {
+                return $m->category ? $m->category->name : '';
+            })
+            ->addColumn('product_id', function ($m) {
+                return $m->product ? $m->product->product_name : '';
             })
             ->make(true);
 
@@ -82,11 +88,18 @@ class StockDatatable extends DataTable
         return [
             [ 'name' => 'stocks.category_id', 'data' => 'category_id', 'title' => 'Category' ],
             [ 'name' => 'stocks.product_id', 'data' => 'product_id', 'title' => 'Product' ],
+            [ 'name' => 'stocks.buying_price', 'data' => 'buying_price', 'title' => 'Buy Price' ],
+            [ 'name' => 'stocks.sell_price', 'data' => 'sell_price', 'title' => 'Sale Price' ],
+            [ 'name' => 'stocks.profit_percent', 'data' => 'profit_percent', 'title' => 'Profit Percent' ],
+            [ 'name' => 'stocks.vat_rate', 'data' => 'vat_rate', 'title' => 'Vat' ],
+            [ 'name' => 'stocks.vat_total', 'data' => 'vat_total', 'title' => 'Vat Total' ],
+            [ 'name' => 'stocks.sub_total', 'data' => 'sub_total', 'title' => 'Sub Total' ],
             [ 'name' => 'stocks.stock_in', 'data' => 'stock_in', 'title' => 'Stock In' ],
-            [ 'name' => 'stocks.sold', 'data' => 'sold', 'title' => 'Sold' ],
-            [ 'name' => 'stocks.stock_out', 'data' => 'stock_out', 'title' => 'Stock Out' ]
+            [ 'name' => 'stocks.stock_out', 'data' => 'stock_out', 'title' => 'Stock Out' ],
+            [ 'name' => 'stocks.stock_balance', 'data' => 'stock_balance', 'title' => 'Stock Balance' ],
         ];
     }
+
     /**
      * Get filename for export.
      *

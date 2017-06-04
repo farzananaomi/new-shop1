@@ -17,6 +17,7 @@ class CreateStocksTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
+            $table->unsignedInteger('category_id');
             $table->unsignedInteger('supplier_id')->default(0)->nullable();
             $table->unsignedInteger('product_id')->default(0)->nullable();
             $table->string('barcode_id')->default('')->nullable();

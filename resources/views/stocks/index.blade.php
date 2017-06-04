@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="header">Listed Clients</div>
+                <div class="header">Storage</div>
                 <div class="content">
                     {!! $dataTable->table() !!}
                 </div>

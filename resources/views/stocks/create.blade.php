@@ -31,6 +31,8 @@
                                     @include('partials.selectpicker', ['name' => 'supplier_id', 'model' => 'stocks.supplier_id',  'horizontal' => 'true','label' => 'Supplier  Name', 'options' => [], 'useKeys' => true,  'useOld' => ''])
                                     @include('partials.bs_text', ['name' => 'buying_price', 'label' => 'Buying Price', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
                                     @include('partials.bs_text', ['name' => 'profit_percent', 'label' => 'Profit percent', 'useOld' => '', 'horizontal' => 'true', ])
+                                    <button onclick="myFunction()">Calculate Sale</button>
+                                    <p id="sale"></p>
                                     @include('partials.bs_text', ['name' => 'discount_percent', 'label' => 'Discount Percent', 'useOld' => '', 'horizontal' => 'true',])
                                     @include('partials.bs_text', ['name' => 'flat_discount', 'label' => 'Flat Discount', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
                                     @include('partials.bs_text', ['name' => 'vat_rate', 'label' => 'Vat Rate', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
@@ -159,6 +161,11 @@
             }
         });
     }
+    function myFunction(p1, p2) {
+        return p1 * p2;
+    }
+    document.getElementById("sale").innerHTML = myFunction(4,2);
+
 </script>
 
 

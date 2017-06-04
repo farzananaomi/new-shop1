@@ -17,9 +17,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property float $vat_total
  * @property float $discount
  * @property float $ground_total
+ * @property string $deleted_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property-read \App\Data\Models\Invoice $invoice
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereDeletedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereDiscount($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereGroundTotal($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereId($value)

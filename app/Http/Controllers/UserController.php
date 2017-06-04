@@ -21,10 +21,6 @@ class UserController extends Controller
         return $datatable->render('users.index');
     }
 
-    public function create()
-    {
-        return view('users.create');
-    }
     public function store(Request $request)
     {
         $data = $request->all();
@@ -43,8 +39,36 @@ class UserController extends Controller
     {
         $user = $this->users->find($id);
 
-        return view('category.show', compact('user'));
+        return view('users.show', compact('user'));
     }
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
 
 
 }

@@ -34,7 +34,9 @@ class StockRepository implements PaginatedResultInterface, RawQueryBuilderOutput
     public function store($data)
     {
         $stock = new Stock();
+
         $stock->product_id = $data['product_id'];
+        $stock->category_id = $data['category_id'];
         $stock->supplier_id = $data['supplier_id'];
         $stock->created_by = $data['created_by'];
         $stock->buying_price = $data['buying_price'];

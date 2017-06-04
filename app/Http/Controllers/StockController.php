@@ -33,7 +33,7 @@ class StockController extends Controller
         $data = $request->all();
         $data['created_by'] =auth()->user()->id;
         $stock = $this->stocks->store($data);
-        dd($stock);
+      //  dd($stock);
         return redirect()->route('stocks.index');
     }
 

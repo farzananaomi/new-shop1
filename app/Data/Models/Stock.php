@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * App\Data\Models\Stock
  *
  * @property int $id
+ * @property int $category_id
  * @property int $supplier_id
  * @property int $product_id
  * @property string $barcode_id
@@ -32,6 +33,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Data\Models\Product $product
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Stock whereBarcodeId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Stock whereBuyingPrice($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Stock whereCategoryId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Stock whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Stock whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Stock whereDeletedAt($value)

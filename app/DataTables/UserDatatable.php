@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: hp
- * Date: 6/1/2017
- * Time: 3:41 PM
- */
 
 namespace App\DataTables;
-
 
 use App\Data\Repositories\UserRepository;
 use Illuminate\Contracts\view\Factory;
@@ -16,21 +9,25 @@ use Yajra\Datatables\Services\DataTable;
 
 class UserDatatable extends DataTable
 {
+    /**
+     * @var UserRepository
+     */
     protected $users;
 
-    public function __construct(Datatables $datatables, Factory $viewFactory, UserRepository $users)
+    public function __construct(Datatables $datatables, Factory $viewFactory, UserRepository $repo)
     {
         parent::__construct($datatables, $viewFactory);
-        $this->users = $users;
+        $this->users = $repo;
         $this->users->setEnableRawOutput(true);
     }
 
     /**
-     * Build DataTable class.
+     * Display ajax response.
      *
-     * @return \Yajra\Datatables\Engines\BaseEngine
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function dataTable()
+
+    public function ajax()
     {
         return $this->datatables
             ->eloquent($this->query())
@@ -38,19 +35,21 @@ class UserDatatable extends DataTable
                 return view('users.action', compact('user'))->render();
             })
             ->make(true);
+
+        /**
+         * Get the query object to be processed by dataTables.
+         *
+         * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Support\Collection
+         */
     }
 
-    /**
-     * Get the query object to be processed by dataTables.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Support\Collection
-     */
     public function query()
     {
         $query = $this->users->search();
 
         return $this->applyScopes($query);
     }
+
 
     /**
      * Optional method if you want to use html builder.
@@ -64,7 +63,7 @@ class UserDatatable extends DataTable
                     ->ajax('')
                     ->addAction([ 'className' => 'td-actions text-right' ])
                     ->parameters([
-                        'dom'     => '<"top"lf<"clearfix">><"table-responsive table-full-width"t><"bottom"<"clearfix">ip><"clearfix"r>',
+                        'dom'     => '<"top"lf<"clearfix">><"table-responsive"t><"bottom"<"clearfix">ip><"clearfix"r>',
                         'buttons' => [
                             'reload',
                         ],
@@ -79,15 +78,15 @@ class UserDatatable extends DataTable
     protected function getColumns()
     {
         return [
-            [ 'name' => 'users.name', 'data' => 'name', 'title' => 'Name', ],
-            [ 'name' => 'users.username', 'data' => 'username', 'title' => 'Username', ],
-            [ 'name' => 'users.role', 'data' => 'role', 'title' => 'Super', ],
-            [ 'name' => 'users.contact', 'data' => 'contact', 'title' => 'Operation' ],
-            [ 'name' => 'users.email', 'data' => 'email', 'title' => 'Region' ],
-            [ 'name' => 'users.address', 'data' => 'address', 'title' => 'Activity' ],
+            [ 'name' => 'users.name', 'data' => 'name', 'title' => 'Name' ],
+            [ 'name' => 'users.role', 'data' => 'role', 'title' => 'User Type' ],
+            [ 'name' => 'users.username', 'data' => 'username', 'title' => 'Username' ],
+            [ 'name' => 'users.contact', 'data' => 'contact', 'title' => 'Contact' ],
+            [ 'name' => 'users.address', 'data' => 'address', 'title' => 'Address' ],
+            [ 'name' => 'users.email', 'data' => 'email', 'title' => 'Email' ],
+
         ];
     }
-
     /**
      * Get filename for export.
      *
@@ -97,4 +96,6 @@ class UserDatatable extends DataTable
     {
         return 'user_' . time();
     }
+
+
 }

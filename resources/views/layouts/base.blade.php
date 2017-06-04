@@ -209,10 +209,10 @@
         <div class="sidebar-wrapper">
 
             <ul class="nav">
-                <li class="{{ is_active('categories*') }}">
-                    <a href="{{ route('categories.create')}}">
+                <li class="{{ is_active('users*') }}">
+                    <a href="{{ route('users.index')}}">
                         <i class="pe-7s-graph"></i>
-                        <p>Create Category</p>
+                        <p>Users</p>
                     </a>
                 </li>
                 <li class="{{ is_active('category*') }}">
@@ -329,12 +329,7 @@
                              alt="British American Tobacco, Bangladesh">
                     </a>
                 </p>
-                <p class="copyright pull-right">
-                    <a href="http://www.singularitybd.com">
-                        <img class="singularity-credit-logo" src="{{ asset('img/singularity-credit.png') }}"
-                             alt="Singularity Interactive Ltd., Apps &amp; Software">
-                    </a>
-                </p>
+
             </div>
         </footer>
 

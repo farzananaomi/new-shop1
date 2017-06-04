@@ -17,13 +17,13 @@
                                                     <h4 class="card-title" style="text-align: center">Invoice{{  $idx + 1 }} </h4>
                                                 </div>
                                                 <div class="card-content">
-                                                    @include('partials.bs_static', ['label' => 'Tilte Of Story', 'value' => $item->product_id])
-                                                    @include('partials.bs_static', ['label' => 'Tilte Of Story', 'value' => $item->quantity])
-                                                    @include('partials.bs_static', ['label' => 'Tilte Of Story', 'value' => $item->unit_price])
-                                                    @include('partials.bs_static', ['label' => 'Tilte Of Story', 'value' => $item->vat_rate])
-                                                    @include('partials.bs_static', ['label' => 'Tilte Of Story', 'value' => $item->vat_total])
-                                                    @include('partials.bs_static', ['label' => 'Tilte Of Story', 'value' => $item->discount])
-                                                    @include('partials.bs_static', ['label' => 'Tilte Of Story', 'value' => $item->ground_total])
+                                                    @include('partials.bs_static', ['label' => 'Product ID', 'value' => $item->product_id])
+                                                    @include('partials.bs_static', ['label' => 'Quantity', 'value' => $item->quantity])
+                                                    @include('partials.bs_static', ['label' => 'Unit Price', 'value' => $item->unit_price])
+                                                    @include('partials.bs_static', ['label' => 'Vat Rate', 'value' => $item->vat_rate])
+                                                    @include('partials.bs_static', ['label' => 'Vat Total', 'value' => $item->vat_total])
+                                                    @include('partials.bs_static', ['label' => 'Discount', 'value' => $item->discount])
+                                                    @include('partials.bs_static', ['label' => 'Ground Total', 'value' => $item->ground_total])
                                                 </div>
                                             </div>
                                         </div>
