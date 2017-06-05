@@ -11,28 +11,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property int $invoice_id
  * @property int $product_id
+ * @property string $name
  * @property int $quantity
  * @property float $unit_price
- * @property float $vat_rate
- * @property float $vat_total
- * @property float $discount
- * @property float $ground_total
+ * @property float $total
  * @property string $deleted_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \App\Data\Models\Invoice $invoice
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereDeletedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereDiscount($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereGroundTotal($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereInvoiceId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereProductId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereTotal($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereUnitPrice($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereVatRate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Item whereVatTotal($value)
  * @mixin \Eloquent
  */
 class Item extends Model

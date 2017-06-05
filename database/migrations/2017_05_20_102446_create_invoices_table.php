@@ -21,10 +21,9 @@ class CreateInvoicesTable extends Migration
             $table->integer('customer_id')->default(0)->nullable();
             $table->date('invoice_date')->default(date('Y-m-d H:i:s'))->nullable();
 
-            $table->decimal('quantity',15,3)->default(0)->nullable();
-            $table->decimal('total',15,3)->default(0)->nullable();
             $table->decimal('vat_rate',15,3)->default(0)->nullable();
             $table->decimal('vat_total',15,3)->default(0)->nullable();
+                $table->decimal('sub_total',15,3)->default(0)->nullable();
             $table->decimal('discount',15,3)->default(0)->nullable();
             $table->decimal('ground_total',15,3)->default(0)->nullable();
             $table->decimal('round_total',15,3)->default(0)->nullable();
@@ -34,6 +33,7 @@ class CreateInvoicesTable extends Migration
             $table->decimal('bank_amount',15,3)->default(0)->nullable();
             $table->decimal('cash_amount',15,3)->default(0)->nullable();
             $table->tinyInteger('payment_status')->default(0)->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });

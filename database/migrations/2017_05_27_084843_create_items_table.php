@@ -19,12 +19,10 @@ class CreateItemsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('invoice_id')->default(0)->nullable();
             $table->unsignedInteger('product_id')->default(0)->nullable();
-            $table->integer('quantity')->default(0)->nullable();
+           $table->string('name')->nullable();
+           $table->integer('quantity')->default(0)->nullable();
             $table->decimal('unit_price',15,3)->default(0)->nullable();
-            $table->decimal('vat_rate',15,3)->default(0)->nullable();
-            $table->decimal('vat_total',15,3)->default(0)->nullable();
-            $table->decimal('discount',15,3)->default(0)->nullable();
-            $table->decimal('ground_total',15,3)->default(0)->nullable();
+            $table->decimal('total',15,3)->default(0)->nullable();
 
             $table->softDeletes();
             $table->timestamps();

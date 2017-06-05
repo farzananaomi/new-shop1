@@ -1,50 +1,101 @@
 @extends('layouts.base')
 
 @section('content')
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="card">
-                <div class="header">Basic Information</div>
-                <div class="content">
-                    <div class="form-horizontal">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                @if($invoice->items->count() > 0)
-                                    @foreach($invoice->items as $idx => $item)
-                                        <div class="col-md-6 col-sm-12 col-xs-12">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h4 class="card-title" style="text-align: center">Invoice{{  $idx + 1 }} </h4>
-                                                </div>
-                                                <div class="card-content">
-                                                    @include('partials.bs_static', ['label' => 'Product ID', 'value' => $item->product_id])
-                                                    @include('partials.bs_static', ['label' => 'Quantity', 'value' => $item->quantity])
-                                                    @include('partials.bs_static', ['label' => 'Unit Price', 'value' => $item->unit_price])
-                                                    @include('partials.bs_static', ['label' => 'Vat Rate', 'value' => $item->vat_rate])
-                                                    @include('partials.bs_static', ['label' => 'Vat Total', 'value' => $item->vat_total])
-                                                    @include('partials.bs_static', ['label' => 'Discount', 'value' => $item->discount])
-                                                    @include('partials.bs_static', ['label' => 'Ground Total', 'value' => $item->ground_total])
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    @endif
-                            </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="clearfix">
+                <span class="panel-title">Invoice</span>
+                <div class="pull-right">
+                    <a href="{{route('invoices.index')}}" class="btn btn-default">Back</a>
+                    <a href="{{route('invoices.edit', $invoice)}}" class="btn btn-primary">Edit</a>
+                    <form class="form-inline" method="post"
+                          action="{{route('invoices.destroy', $invoice)}}"
+                          onsubmit="return confirm('Are you sure?')"
+                    >
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Invoice No.</label>
+                        <p>{{$invoice->invoice_no}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Grand Total</label>
+                        <p>${{$invoice->grand_total}}</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Client</label>
+                        <p>{{$invoice->client}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Client Address</label>
+                        <pre class="pre">{{$invoice->client_address}}</pre>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <p>{{$invoice->title}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Invoice Date</label>
+                            <p>{{$invoice->invoice_date}}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Due Date</label>
+                            <p>{{$invoice->due_date}}</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-12">
-            <a href="{{ route('invoices.edit', $invoice->id) }}"
-               class="btn btn-fill btn-info"><i class="fa fa-pencil"></i> Edit Member Info</a>
-            <a href="{{ route('invoices.show', [$invoice->id, 'download' => 'pdf']) }}" rel="tooltip" title="" class="btn btn-info" target="_blank"
-               data-original-title="Export PDF"><i class="material-icons"></i> Export</a>
-            <a href="{{ route('invoices.index') }}"
-               class="btn btn-fill btn-warning pull-right"><i class="fa fa-arrow-left"></i> Back</a>
+            <hr>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($invoice->products as $product)
+                    <tr>
+                        <td class="table-name">{{$product->name}}</td>
+                        <td class="table-price">${{$product->price}}</td>
+                        <td class="table-qty">{{$product->qty}}</td>
+                        <td class="table-total text-right">${{$product->qty * $product->price}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td class="table-empty" colspan="2"></td>
+                    <td class="table-label">Sub Total</td>
+                    <td class="table-amount">${{$invoice->sub_total}}</td>
+                </tr>
+                <tr>
+                    <td class="table-empty" colspan="2"></td>
+                    <td class="table-label">Discount</td>
+                    <td class="table-amount">${{$invoice->discount}}</td>
+                </tr>
+                <tr>
+                    <td class="table-empty" colspan="2"></td>
+                    <td class="table-label">Grand Total</td>
+                    <td class="table-amount">${{$invoice->grand_total}}</td>
+                </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
 @endsection
-
