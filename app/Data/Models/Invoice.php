@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $invoice_date
  * @property float $vat_rate
  * @property float $vat_total
+ * @property float $sub_total
  * @property float $discount
  * @property float $ground_total
  * @property float $round_total
@@ -42,6 +43,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Invoice wherePaymentType($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Invoice whereRoundTotal($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Invoice whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Invoice whereSubTotal($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Invoice whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Invoice whereVatRate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Data\Models\Invoice whereVatTotal($value)
@@ -62,5 +64,8 @@ class Invoice extends Model
     {
         return $this->hasMany(Item::class, 'invoice_id', 'id');
     }
-
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
 }

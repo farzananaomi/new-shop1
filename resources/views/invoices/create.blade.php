@@ -45,20 +45,53 @@
                                             <thead class="text-primary">
                                             <tr>
                                                 <th>Product ID</th>
+                                                <th>Name</th>
                                                 <th>Quantity</th>
                                                 <th>Unit Price</th>
-                                                <th>Vat(%)</th>
-                                                <th>Discount(%)</th>
+                                                <th>Total</th>
                                             </tr>
                                             </thead>
                                             <tbody id="exp" name="exp">
                                             <tr>
                                                 <td>@include('partials.bs_table', ['name' => 'items[1][product_id]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
+                                                <td>@include('partials.bs_table', ['name' => 'items[1][name]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
                                                 <td>@include('partials.bs_table', ['name' => 'items[1][quantity]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
                                                 <td>@include('partials.bs_table', ['name' => 'items[1][unit_price]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                                <td>@include('partials.bs_table', ['name' => 'items[1][vat_total]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                                <td>@include('partials.bs_table', ['name' => 'items[1][discount]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
+                                                <td>@include('partials.bs_table', ['name' => 'items[1][total]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
+
                                             </tr>
+                                            <tfoot>
+                                            <tr>
+                                                <td class="table-empty" colspan="3" style=" border: 0" ></td>
+                                                <td class="table-label">Sub Total</td>
+                                                <td class="table-amount"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="table-empty" colspan="3" style=" border: 0" ></td>
+                                                <td class="table-label">Vat</td>
+                                                <td>@include('partials.bs_table', ['name' => 'vat', 'useOld' => '0','extras' => 'required="required"'])</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="table-empty" colspan="3" style=" border: 0" ></td>
+                                                <td class="table-label">Vat Total</td>
+                                                <td class="table-amount"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="table-empty" colspan="3" style=" border: 0"></td>
+                                                <td class="table-label">Discount</td>
+                                                <td>@include('partials.bs_table', ['name' => 'discount', 'useOld' => '0', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="table-empty" colspan="3" style=" border: 0"></td>
+                                                <td class="table-label">Grand Total</td>
+                                                <td class="table-amount"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="table-empty" colspan="3" style=" border: 0" ></td>
+                                                <td class="table-label">Round Total</td>
+                                                <td class="table-amount"></td>
+                                            </tr>
+                                            </tfoot>
                                             <input type="text" hidden="hidden" value="1" id="countexp" name="countexp"/>
 
 
@@ -113,10 +146,10 @@
         $("#exp").append(
             "<tr>" +
             "<td><input type='text'  class='form-control'  id='items[" + countBox + "][product_id]' name='items[" + countBox + "][product_id]'/></td>" +
+            "<td><input type='text'  class='form-control'  id='items[" + countBox + "][name]' name='items[" + countBox + "][name]'/></td>" +
             "<td><input type='text'  class='form-control'  id='items[" + countBox + "][quantity]' name='items[" + countBox + "][quantity]'/></td>" +
             "<td><input type='text'  class='form-control'  id='items[" + countBox + "][unit_price]' name='items[" + countBox + "][unit_price]'/></td>" +
-            "<td><input type='text'  class='form-control'  id='items[" + countBox + "][vat_total]" + countBox + "' name='items[" + countBox + "][vat_total]'/></td>" +
-            "<td><input type='text'  class='form-control'  id='items[" + countBox + "][discount]' name='items[" + countBox + "][discount]'/></td>" +
+            "<td><input type='text'  class='form-control'  id='items[" + countBox + "][total]" + countBox + "' name='items[" + countBox + "][total]'/></td>" +
             "</tr>");
 
         countBox += 1;

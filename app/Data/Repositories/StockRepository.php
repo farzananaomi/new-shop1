@@ -16,9 +16,9 @@ class StockRepository implements PaginatedResultInterface, RawQueryBuilderOutput
 
     public function search($filter = [])
     {
-        $drivers = Stock::query();
+        $stocks = Stock::query();
 
-        return $this->output($drivers);
+        return $this->output($stocks);
     }
 
     public function find($id)

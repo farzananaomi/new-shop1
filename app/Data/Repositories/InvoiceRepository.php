@@ -5,6 +5,9 @@ namespace App\Data\Repositories;
 use App\Data\Models\Invoice;
 use App\Data\Models\Item;
 use App\Data\Models\Customer;
+use App\Data\Models\Product;
+use App\Data\Models\Stock;
+use App\Data\Models\User;
 Use DB;
 use App\Data\Repositories\Interfaces\PaginatedResultInterface;
 use App\Data\Repositories\Interfaces\RawQueryBuilderOutputInterface;
@@ -37,29 +40,27 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
     {
 
         $customer = new Customer();
-
-        $customer->customer_name = ['customer_name'];
-        $customer->mobile_no =['mobile_no'];
-        $customer->address =['address'];
-
+        $customer->customer_name = sanitize(@$data['customer_name'], '');
+        $customer->mobile_no = sanitize(@$data['mobile_no'], '');
+        $customer->address = sanitize(@$data['address'], '');
         $customer->save();
-
-
+        //var_dump($customer);
         $invoice = new Invoice();
         $invoice->customer_id = $customer->id;
-        $invoice->invoice_no=$data['invoice_no'];
+        $invoice->invoice_no = $data['invoice_no'];
         $invoice->invoice_date = date('Y-m-d H:i:s');
-        $invoice->payment_type = 'Cash';
-        $invoice->card_type = 'bank';
-        $invoice->bank_amount ='1';
-        $invoice->cash_amount = 2;
-        $invoice->payment_status = 1;
+        $invoice->payment_type =  'Cash';
+        $invoice->card_type = sanitize(@$data['card_type'], 0);
+        $invoice->bank_amount = sanitize(@$data['bank_amount'], 0);
+        $invoice->cash_amount = sanitize(@$data['cash_amount'], 0);
+        $invoice->payment_status = 1;//sanitize(@$data['payment_status'], 0);
+        $invoice->status =1;// sanitize(@$data['status'], 1);
 
-        $item = new Item();
+        $invoice->sub_total = sanitize(@$data['total'], 1);
         $invoice->discount = $data['discount'];
-        $invoice->vat_rate =$data['vat_rate'];
-        $invoice->vat_total =$item->unit_price *($invoice->vat_rate/100);
-        $invoice->ground_total =
+        $invoice->vat_rate =sanitize(@$data['vat_rate'],0);
+        $invoice->vat_total = sanitize(@$data['vat_total'], 0);
+        $invoice->ground_total = sanitize(@$data['ground_total'], 0);
         $invoice->round_total = sanitize(@$data['round_total'], 0);
 
         $invoice->save();
@@ -69,7 +70,6 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
             $item = new Item();
             foreach ($val as $key => $value) {
                 $item->$key = $value;
-                $item->total=$item->quantity * $item->unit_price;
             }
             $items[] = $item;
         }
@@ -96,5 +96,24 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
 
     }
 
+    public function storeItem($data)
+    {
+        $invoice = Invoice::find($data['id']);
 
+        if (empty($invoice)) {
+            return null;
+        }
+
+        $item = new Item();
+        $item->product_id = $data['product_id'];
+        $item->quantity = $data['quantity'];
+        $item->unit_price = $data['unit_price'];
+        $item->vat = $data['vat'];
+        $item->discount = $data['discount'];
+
+
+        $invoice->items()->save($item);
+
+        return $item;
+    }
 }
