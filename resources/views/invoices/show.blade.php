@@ -34,6 +34,10 @@
                         <label>Grand Total</label>
                         <p>${{$invoice->ground_total}}</p>
                     </div>
+                    <div class="form-group">
+                        <label>Payment Type</label>
+                        <p>{{$invoice->payment_type}}</p>
+                    </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
@@ -76,9 +80,9 @@
                 @foreach($invoice->items as $item)
                     <tr>
                         <td class="table-name">{{$item->name}}</td>
-                        <td class="table-price">${{$item->unit_price}}</td>
+                        <td class="table-price">{{$item->unit_price}}</td>
                         <td class="table-qty">{{$item->quantity}}</td>
-                        <td class="table-total text-right">${{$item->quantity * $item->unit_price}}</td>
+                        <td class="table-total">{{$item->quantity * $item->unit_price}}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -86,7 +90,7 @@
                 <tr>
                     <td class="table-empty" colspan="2" style="border:0"></td>
                     <td class="table-label">Sub Total</td>
-                    <td class="table-amount">${{$invoice->sub_total}}</td>
+                    <td class="table-amount">{{$invoice->sub_total}}</td>
                 </tr>
                 <tr>
                     <td class="table-empty" colspan="2" style="border:0"></td>

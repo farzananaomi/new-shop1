@@ -18,7 +18,7 @@
                                 <div class="col-xs-6">
                                     @include('partials.bs_text', ['name' => 'invoice_no', 'label' => 'Invoice No', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
                                     @include('partials.bs_date', ['name' => 'invoice_date',  'label' => 'Invoice Date', 'useOld' => '','horizontal' => 'true', 'extras' => 'data-bind="text: dob"',])
-                                    @include('partials.selectpicker', ['name' => 'status',  'label' => 'Payment Type',  'options' =>['Cash', 'Card', 'Both'], 'horizontal' => 'true','useKeys' => false,'useOld' => '',])
+                                    @include('partials.selectpicker', ['name' => 'payment_type',  'label' => 'Payment Type',  'options' =>['Cash', 'Card', 'Both'], 'horizontal' => 'true','useKeys' => false,'useOld' => '',])
 
                                 </div>
                             </div>

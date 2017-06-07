@@ -16,9 +16,6 @@
             line-height: 1.6;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            margin: 0 !important;
-        }
 
         table {
             width: 100%;
@@ -80,25 +77,18 @@
             text-align: center;
         }
 
-        .profile-image {
-            height: 2.2in;
-            width: 2in;
-            float: right;
-            border: 1px solid #2e2e2e;
-            margin-left: 0.1in;
-            margin-top: 0.25in;
-            margin-bottom: 0.1in;
         }
     </style>
 </head>
 <body>
 
+<h1 class="page-title">Invoice Information</h1>
 
-
-
-
-<h1 class="page-title" style="padding-left: 1.15in;">Employee Information</h1>
-
+<div>
+    <h3>Billed TO</h3>
+    <p><h4>Name:</h4>{{$invoice->customer->customer_name}}</p>
+    <p><h4>Address:</h4>{{$invoice->customer->address}}</p>
+</div>
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
@@ -121,7 +111,7 @@
     <tfoot>
     <tr>
         <td class="table-empty" colspan="2" style="border:0"></td>
-        <td class="table-label" style="border:0">Sub Total</td>
+        <td class="table-label">Sub Total</td>
         <td class="table-amount">${{$invoice->sub_total}}</td>
     </tr>
     <tr>
