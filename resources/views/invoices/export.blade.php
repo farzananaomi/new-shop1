@@ -16,9 +16,6 @@
             line-height: 1.6;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            margin: 0 !important;
-        }
 
         table {
             width: 100%;
@@ -80,64 +77,54 @@
             text-align: center;
         }
 
-        .profile-image {
-            height: 2.2in;
-            width: 2in;
-            float: right;
-            border: 1px solid #2e2e2e;
-            margin-left: 0.1in;
-            margin-top: 0.25in;
-            margin-bottom: 0.1in;
         }
     </style>
 </head>
 <body>
 
+<h1 class="page-title">Invoice Information</h1>
 
-
-
-
-<h1 class="page-title" style="padding-left: 1.15in;">Employee Information</h1>
-
-
-<table style="width: 6.02in;">
-    <a href="{{ route('invoices.show', [$invoice->id, 'download' => 'pdf']) }}">Download PDF</a>
-    <caption>General Information</caption>
-    <tbody>
+<div>
+    <h3>Billed TO</h3>
+    <p><h4>Name:</h4>{{$invoice->customer->customer_name}}</p>
+    <p><h4>Address:</h4>{{$invoice->customer->address}}</p>
+</div>
+<table class="table table-bordered table-striped">
+    <thead>
     <tr>
-        <td class="label label-md">Category Name</td>
-        <td>{{ $invoice->invoice_date }}</td>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Total</th>
     </tr>
-
+    </thead>
+    <tbody>
+    @foreach($invoice->items as $item)
+        <tr>
+            <td class="table-name">{{$item->name}}</td>
+            <td class="table-price">${{$item->unit_price}}</td>
+            <td class="table-qty">{{$item->quantity}}</td>
+            <td class="table-total text-right">${{$item->quantity * $item->unit_price}}</td>
+        </tr>
+    @endforeach
     </tbody>
+    <tfoot>
+    <tr>
+        <td class="table-empty" colspan="2" style="border:0"></td>
+        <td class="table-label">Sub Total</td>
+        <td class="table-amount">${{$invoice->sub_total}}</td>
+    </tr>
+    <tr>
+        <td class="table-empty" colspan="2" style="border:0"></td>
+        <td class="table-label">Discount</td>
+        <td class="table-amount">{{$invoice->discount}} Tk</td>
+    </tr>
+    <tr>
+        <td class="table-empty" colspan="2" style="border:0"></td>
+        <td class="table-label">Grand Total</td>
+        <td class="table-amount">${{$invoice->ground_total}}</td>
+    </tr>
+    </tfoot>
 </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>

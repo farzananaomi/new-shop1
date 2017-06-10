@@ -39,9 +39,9 @@ class StockDatatable extends DataTable
             ->addColumn('category_id', function ($m) {
                 return $m->category ? $m->category->name : '';
             })
-            ->addColumn('product_id', function ($m) {
+            /*->addColumn('product_id', function ($m) {
                 return $m->product ? $m->product->product_name : '';
-            })
+            })*/
             ->make(true);
 
         /**
@@ -87,7 +87,7 @@ class StockDatatable extends DataTable
     {
         return [
             [ 'name' => 'stocks.category_id', 'data' => 'category_id', 'title' => 'Category' ],
-            [ 'name' => 'stocks.product_id', 'data' => 'product_id', 'title' => 'Product' ],
+         //   [ 'name' => 'stocks.product_id', 'data' => 'product_id', 'title' => 'Product' ],
             [ 'name' => 'stocks.buying_price', 'data' => 'buying_price', 'title' => 'Buy Price' ],
             [ 'name' => 'stocks.sell_price', 'data' => 'sell_price', 'title' => 'Sale Price' ],
             [ 'name' => 'stocks.profit_percent', 'data' => 'profit_percent', 'title' => 'Profit Percent' ],

@@ -43,7 +43,8 @@ class AjaxController extends Controller
 
     public function getEntity(ProductRepository $repo)
     {
-        $_candidate = $repo->lists();
+        $id = $_REQUEST['id'];
+        $_candidate = $repo->lists($id);
         $candidate = [];
         foreach ($_candidate as $key => $territory) {
             $candidate[] = (object)[

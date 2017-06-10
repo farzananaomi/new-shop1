@@ -15,7 +15,7 @@
                                         <label for="category_id_h0" class="col-sm-3 control-label">Category</label>
                                         <div class="col-sm-8">
                                             <input type="hidden" name="category_id" id="category_id"
-                                                   style="display: none"   value="0">
+                                                   style="display: none" value="0">
                                             <input type="hidden" name="increment_id" id="increment_id"
                                                    style="display: none" value="1">
                                             <select class="form-control select2" id="category_id_h0"
@@ -31,13 +31,13 @@
                                     @include('partials.selectpicker', ['name' => 'supplier_id', 'model' => 'stocks.supplier_id',  'horizontal' => 'true','label' => 'Supplier  Name', 'options' => [], 'useKeys' => true,  'useOld' => ''])
                                     @include('partials.bs_text', ['name' => 'buying_price', 'label' => 'Buying Price', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
                                     @include('partials.bs_text', ['name' => 'profit_percent', 'label' => 'Profit percent', 'useOld' => '', 'horizontal' => 'true', ])
-                                    <button onclick="myFunction()">Calculate Sale</button>
-                                    <p id="sale"></p>
-                                    @include('partials.bs_text', ['name' => 'discount_percent', 'label' => 'Discount Percent', 'useOld' => '', 'horizontal' => 'true',])
-                                    @include('partials.bs_text', ['name' => 'flat_discount', 'label' => 'Flat Discount', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
-                                    @include('partials.bs_text', ['name' => 'vat_rate', 'label' => 'Vat Rate', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
-                                    @include('partials.bs_text', ['name' => 'stock_in', 'label' => 'Quantity', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
-                                    @include('partials.bs_text', ['name' => 'stock_out', 'label' => 'Stock Out', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
+                                    <a onclick="CalculateSale()" href="#" class="btn btn-info">Calculate Sale</a>
+                                    @include('partials.bs_text', ['name' => 'sell_price', 'label' => 'Sell Price ', 'useOld' => '', 'horizontal' => 'true',])
+                                    @include('partials.bs_text', ['name' => 'discount_percent', 'label' => 'Discount Percent', 'useOld' => '0', 'horizontal' => 'true',])
+                                    @include('partials.bs_text', ['name' => 'flat_discount', 'label' => 'Flat Discount', 'useOld' => '0', 'horizontal' => 'true'])
+                                    @include('partials.bs_text', ['name' => 'vat_rate', 'label' => 'Vat Rate', 'useOld' => '15', 'horizontal' => 'true'])
+                                    @include('partials.bs_text', ['name' => 'stock_in', 'label' => 'Quantity', 'useOld' => '0', 'horizontal' => 'true', 'extras' => 'required="required"'])
+                               {{--     @include('partials.bs_text', ['name' => 'stock_out', 'label' => 'Stock Out', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])--}}
 
                                 </div>
                             </div>
@@ -74,11 +74,17 @@
     }
     function set_category(evn) {
         var values = evn.value;
-      //  alert('val ' + values);
+        //  alert('val ' + values);
         $("#category_id").val(values);
         load_subcategory();
+        entity_select();
     }
 
+
+   /* $('#product_id').on('change', function() {
+        alert( this.value );
+        entity_select();
+    });*/
     function category_select() {
         $.ajax({
             url: "{{ route('ajax.category') }}",
@@ -112,7 +118,7 @@
 
                     increment_id = increment_id + 1;
                     $("#increment_id").val(increment_id);
-
+                    category_id = result[0].id;
                     for (i = 0; i < result.length; i++) {
                         html_string = html_string + '<option value="' + result[i].id + '">' + result[i].text + '</option>';
                     }
@@ -122,7 +128,8 @@
                         '</div>';
 
                     $("#div_sub_category").append(html_string);
-                }else{
+                    $("#category_id").val(category_id);
+                } else {
                     $("#div_sub_category").append('');
                 }
             },
@@ -132,9 +139,11 @@
         });
     }
     function entity_select() {
+        var category_id = $("#category_id").val();
         $.ajax({
             url: "{{ route('ajax.entity') }}",
             type: "get",
+            data: {id: category_id},
             success: function (result) {
                 for (i = 0; i < result.length; i++) {
                     $('#product_id').append('<option value="' + result[i].id + '">' + result[i].text + '</option>');
@@ -161,10 +170,14 @@
             }
         });
     }
-    function myFunction(p1, p2) {
-        return p1 * p2;
+    function CalculateSale() {
+         var buying_price=$("#buying_price").val();
+         var profit_percent=$("#profit_percent").val();
+        buying_price=parseFloat(buying_price);
+        profit_percent=parseFloat(profit_percent);
+        $("#sell_price").val(buying_price+buying_price*profit_percent/100);
     }
-    document.getElementById("sale").innerHTML = myFunction(4,2);
+   // document.getElementById("sale").innerHTML = myFunction(4, 2);
 
 </script>
 

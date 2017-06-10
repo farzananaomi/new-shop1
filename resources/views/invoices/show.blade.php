@@ -15,6 +15,10 @@
                         <input type="hidden" name="_method" value="delete">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <input type="submit" value="Delete" class="btn btn-danger">
+
+                        <a href="{{ route('invoices.show', [$invoice->id, 'download' => 'pdf']) }}" rel="tooltip" title="" class="btn btn-info" target="_blank"
+                           data-original-title="Export PDF"><i class="material-icons"></i> Export</a>
+
                     </form>
                 </div>
             </div>
@@ -28,23 +32,27 @@
                     </div>
                     <div class="form-group">
                         <label>Grand Total</label>
-                        <p>${{$invoice->grand_total}}</p>
+                        <p>${{$invoice->ground_total}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Type</label>
+                        <p>{{$invoice->payment_type}}</p>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Client</label>
-                        <p>{{$invoice->client}}</p>
+                        <p>{{$invoice->customer->customer_name}}</p>
                     </div>
                     <div class="form-group">
                         <label>Client Address</label>
-                        <pre class="pre">{{$invoice->client_address}}</pre>
+                        <p>{{$invoice->customer->address}}</p>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label>Title</label>
-                        <p>{{$invoice->title}}</p>
+                        <label>VAT</label>
+                        <p>{{$invoice->vat_rate}}</p>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
@@ -52,8 +60,8 @@
                             <p>{{$invoice->invoice_date}}</p>
                         </div>
                         <div class="col-sm-6">
-                            <label>Due Date</label>
-                            <p>{{$invoice->due_date}}</p>
+                            <label>Vat total</label>
+                            <p>{{$invoice->vat_total}}</p>
                         </div>
                     </div>
                 </div>
@@ -69,33 +77,34 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($invoice->products as $product)
+                @foreach($invoice->items as $item)
                     <tr>
-                        <td class="table-name">{{$product->name}}</td>
-                        <td class="table-price">${{$product->price}}</td>
-                        <td class="table-qty">{{$product->qty}}</td>
-                        <td class="table-total text-right">${{$product->qty * $product->price}}</td>
+                        <td class="table-name">{{$item->name}}</td>
+                        <td class="table-price">{{$item->unit_price}}</td>
+                        <td class="table-qty">{{$item->quantity}}</td>
+                        <td class="table-total">{{$item->quantity * $item->unit_price}}</td>
                     </tr>
                 @endforeach
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td class="table-empty" colspan="2"></td>
+                    <td class="table-empty" colspan="2" style="border:0"></td>
                     <td class="table-label">Sub Total</td>
-                    <td class="table-amount">${{$invoice->sub_total}}</td>
+                    <td class="table-amount">{{$invoice->sub_total}}</td>
                 </tr>
                 <tr>
-                    <td class="table-empty" colspan="2"></td>
+                    <td class="table-empty" colspan="2" style="border:0"></td>
                     <td class="table-label">Discount</td>
-                    <td class="table-amount">${{$invoice->discount}}</td>
+                    <td class="table-amount">{{$invoice->discount}} Tk</td>
                 </tr>
                 <tr>
-                    <td class="table-empty" colspan="2"></td>
+                    <td class="table-empty" colspan="2" style="border:0"></td>
                     <td class="table-label">Grand Total</td>
-                    <td class="table-amount">${{$invoice->grand_total}}</td>
+                    <td class="table-amount">${{$invoice->ground_total}}</td>
                 </tr>
                 </tfoot>
             </table>
         </div>
     </div>
+
 @endsection

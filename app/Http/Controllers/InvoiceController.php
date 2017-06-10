@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Data\Models\Invoice;
 use App\Data\Repositories\CategoryRepository;
 use App\Data\Repositories\InvoiceRepository;
 use App\DataTables\InvoiceDatatable;
@@ -26,10 +27,12 @@ class InvoiceController extends Controller
         $this->categories = $categories;
     }
 
-    public function index(InvoiceDatatable $datatable)
+    public function index()
     {
-        $invoices = $this->invoices->all();
-        return $datatable->render('invoices.index', compact('invoices'));
+        $invoices = Invoice::orderBy('created_at', 'desc')
+                           ->paginate(8);
+
+        return view('invoices.index', compact('invoices'));
     }
 
     public function create()
@@ -42,7 +45,7 @@ class InvoiceController extends Controller
         $data = $request->all();
       //  dd($data);
         $invoice = $this->invoices->store($data);
-        dd($invoice);
+        //dd($invoice);
         return redirect()->route('invoices.index');
     }
 

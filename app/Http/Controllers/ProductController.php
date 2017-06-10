@@ -46,20 +46,20 @@ class ProductController extends Controller
         return view('category.show', compact('category'));
     }
 
-    /* public function edit($id)
+    public function edit($id)
      {
-         $category = $this->products->find($id);
+         $product = $this->products->find($id);
 
-         return view('category.edit', compact('category'));
+         return view('products.edit', compact('product'));
      }
 
-     public function update($id, CategoryStoreRequest $request)
+     public function update($id, Request $request)
      {
-         $data = $request->only(['name', 'description']);
+         $data = $request->all();
 
          $category = $this->products->update($id, $data);
 
-         return redirect()->route('category.index');
+         return redirect()->route('products.index');
      }
 
      /**

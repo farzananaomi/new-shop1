@@ -37,7 +37,7 @@
     <link href={{ asset('theme/css/light-bootstrap-dashboard.css') }} rel="stylesheet"/>
 
     {{--  CSS for Demo Purpose, don't include it in your project     --}}
-    <link href={{ asset('theme/css/demo.css') }} rel="stylesheet" />
+    <link href={{ asset('theme/css/style.css') }} rel="stylesheet" />
 
 
     {{--     Fonts and icons     --}}

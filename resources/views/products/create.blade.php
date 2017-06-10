@@ -14,7 +14,7 @@
                                         <label for="category_id_h0" class="col-sm-3 control-label">Category</label>
                                         <div class="col-sm-8">
                                             <input type="hidden" name="category_id" id="category_id"
-                                                   style="display: none"   value="0">
+                                                   style="display: none"   value="1">
                                             <input type="hidden" name="increment_id" id="increment_id"
                                                    style="display: none" value="1">
                                             <select class="form-control select2" id="category_id_h0"

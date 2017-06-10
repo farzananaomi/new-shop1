@@ -9,6 +9,7 @@ use App\Data\Repositories\Interfaces\RawQueryBuilderOutputInterface;
 use App\Data\Repositories\Traits\PaginatedOutputTrait;
 use App\Data\Repositories\Traits\ProcessOutputTrait;
 use App\Data\Repositories\Traits\RawQueryBuilderOutputTrait;
+use Illuminate\Support\Facades\Auth;
 
 class StockRepository implements PaginatedResultInterface, RawQueryBuilderOutputInterface
 {
@@ -16,9 +17,9 @@ class StockRepository implements PaginatedResultInterface, RawQueryBuilderOutput
 
     public function search($filter = [])
     {
-        $drivers = Stock::query();
+        $stocks = Stock::query();
 
-        return $this->output($drivers);
+        return $this->output($stocks);
     }
 
     public function find($id)
@@ -38,7 +39,7 @@ class StockRepository implements PaginatedResultInterface, RawQueryBuilderOutput
         $stock->product_id = $data['product_id'];
         $stock->category_id = $data['category_id'];
         $stock->supplier_id = $data['supplier_id'];
-        $stock->created_by = $data['created_by'];
+        $stock->created_by = Auth::id();
         $stock->buying_price = $data['buying_price'];
         $stock->profit_percent = $data['profit_percent'];
         $stock->sell_price = ($stock->buying_price *($stock->profit_percent/100))+$stock->buying_price;
@@ -48,7 +49,7 @@ class StockRepository implements PaginatedResultInterface, RawQueryBuilderOutput
         $stock->vat_total = $stock->sell_price *($stock->vat_rate/100);
         $stock->sub_total = $stock->vat_total + $stock->sell_price ;
         $stock->stock_in = $data['stock_in'];
-        $stock->stock_out = $data['stock_out'];
+        $stock->stock_out = 0;
         $stock->stock_balance = $stock->stock_in - $stock->stock_out;
 
         $stock->save();
