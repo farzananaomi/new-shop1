@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Data\Repositories\CategoryRepository;
+use App\DataTables\CategoryDatatable;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use PDF;
@@ -16,11 +17,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index (CategoryDatatable $datatable)
     {
-        $categories = $this->categories->all();
-        return view('categories.index', compact('categories'));
-    }
+
+         return $datatable->render('categories.index');
+      }
     /*public function create()
     {
         return view('categories.create');

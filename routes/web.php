@@ -22,6 +22,8 @@ Route::group(['middleware' => 'auth:web',], function () {
     Route::get('ajax/category', ['as' => 'ajax.category', 'uses' => 'AjaxController@getCategory']);
     Route::get('ajax/sub_category/{id?}', ['as' => 'ajax.sub_category', 'uses' => 'AjaxController@getSubCategory']);
     Route::get('ajax/entity/{id?}', ['as' => 'ajax.entity', 'uses' => 'AjaxController@getEntity']);
+    Route::get('ajax/get_product_details/{id?}', ['as' => 'ajax.get_product_details', 'uses' => 'AjaxController@get_product_details']);
+
     Route::get('ajax/supplier', ['as' => 'ajax.supplier', 'uses' => 'AjaxController@getSupplier']);
     Route::put('items/{id}', ['as' => 'itemList', 'uses' => 'ItemController@itemList']);
 

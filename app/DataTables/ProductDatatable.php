@@ -42,6 +42,7 @@ class ProductDatatable extends DataTable
             })
 
             ->addColumn('category_id', function ($m) {
+
                 return $m->category ? $m->category->name : '';
             })
             ->make(true);

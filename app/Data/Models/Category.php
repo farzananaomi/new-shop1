@@ -38,6 +38,7 @@ class Category extends Model
     protected $table = 'categories';
     public function subCategories()
     {
-        return $this->hasMany(Category::class, 'parent_id', 'id')->where('parent_id', '<>', '0');
+        return $this->belongsTo(Category::class, 'parent_id','id');
+       // return $this->hasMany(Category::class, 'parent_id', 'id')->where('parent_id', '<>', '0');
     }
 }

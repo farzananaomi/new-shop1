@@ -59,7 +59,6 @@ class InvoiceController extends Controller
     {   $invoice = $this->invoices->find($id);
 
         if($request->has('download')){
-            $now = Carbon::now()->toDateTimeString();
             $pdf = PDF::loadView('invoices.export', compact('invoice'));
             return $pdf->download("invoice.pdf");
         }

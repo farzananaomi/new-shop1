@@ -31,7 +31,7 @@
                                     @include('partials.selectpicker', ['name' => 'supplier_id', 'model' => 'stocks.supplier_id',  'horizontal' => 'true','label' => 'Supplier  Name', 'options' => [], 'useKeys' => true,  'useOld' => ''])
                                     @include('partials.bs_text', ['name' => 'buying_price', 'label' => 'Buying Price', 'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])
                                     @include('partials.bs_text', ['name' => 'profit_percent', 'label' => 'Profit percent', 'useOld' => '', 'horizontal' => 'true', ])
-                                    <a onclick="CalculateSale()" href="#" class="btn btn-info">Calculate Sale</a>
+                                    <a onclick="CalculateSale()" href="#" class="btn btn-danger" style="margin-left: 150px">Calculate Sale</a>
                                     @include('partials.bs_text', ['name' => 'sell_price', 'label' => 'Sell Price ', 'useOld' => '', 'horizontal' => 'true',])
                                     @include('partials.bs_text', ['name' => 'discount_percent', 'label' => 'Discount Percent', 'useOld' => '0', 'horizontal' => 'true',])
                                     @include('partials.bs_text', ['name' => 'flat_discount', 'label' => 'Flat Discount', 'useOld' => '0', 'horizontal' => 'true'])

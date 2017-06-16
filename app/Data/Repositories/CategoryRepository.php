@@ -16,7 +16,7 @@ class CategoryRepository implements PaginatedResultInterface, RawQueryBuilderOut
     const DEFAULT_OPERATION_ID = 1;
     public function search($filter = [])
     {
-        $categories = Category::query();
+        $categories = Category::query()->where('parent_id','>=',0);
 
         return $this->output($categories);
     }
@@ -30,7 +30,9 @@ class CategoryRepository implements PaginatedResultInterface, RawQueryBuilderOut
     }
     public function find($id)
     {
-        return Category::find($id);
+       return Category::find($id);
+
+
     }
     public function all()
     {
