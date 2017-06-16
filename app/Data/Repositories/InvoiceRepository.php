@@ -49,28 +49,21 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
         $invoice->customer_id = $customer->id;
 
      //   $invoice->invoice_no = $data['invoice_no'];
-        $invoice->invoice_date = strtotime($data['invoice_date']); //date('Y-m-d H:i:s');
-
-        $invoice->invoice_no = $data['invoice_no'];
-        $invoice->invoice_date = date('Y-m-d H:i:s');
+        $invoice->invoice_date =  $data['invoice_date']; //date('Y-m-d H:i:s');
+        $invoice->vat_total = sanitize(@$data['vat_total'], 0);
+        $invoice->sub_total = sanitize(@$data['sub_total'], 1);
+        $invoice->discount = $data['discount'];
+        $invoice->grand_total = sanitize(@$data['grand_total'], 0);
+        $invoice->total_payable = sanitize(@$data['total_payable'], 0);
 
         $invoice->payment_type = $data['payment_type'];
         $invoice->card_type = sanitize(@$data['card_type'], 0);
         $invoice->bank_amount = sanitize(@$data['bank_amount'], 0);
-        $invoice->cash_amount = sanitize(@$data['cash_amount'], 0);
+
+        $invoice->cash_amount = $invoice->total_payable-$invoice->bank_amount;
         $invoice->payment_status = 1;//sanitize(@$data['payment_status'], 0);
         $invoice->status =1;// sanitize(@$data['status'], 1);
-
-
-        $invoice->sub_total = 1;
-
-        $invoice->sub_total = sanitize(@$data['total'], 1);
-
-        $invoice->discount = $data['discount'];
-        $invoice->vat_rate =sanitize(@$data['vat_rate'],0);
-        $invoice->vat_total = sanitize(@$data['vat_total'], 0);
-        $invoice->ground_total = sanitize(@$data['ground_total'], 0);
-        $invoice->round_total = sanitize(@$data['round_total'], 0);
+        $invoice->in_words = sanitize(@$data['in_words_h'], '');
 
         $invoice->save();
 
@@ -79,7 +72,15 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
             $item = new Item();
             foreach ($val as $key => $value) {
                 $item->$key = $value;
+
             }
+
+            $stock_data=Stock::where('barcode_id',$item->product_id)->first();
+            //$stock = new Stock();
+            $stock=$stock_data;
+            $stock->stock_out=$stock->stock_out+$item->quantity;
+            $stock->stock_balance=$stock->stock_in-$stock->stock_out;
+            $stock->save();
             $items[] = $item;
         }
 
@@ -88,7 +89,7 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
             if ($invoice->save()) {
                 $invoice->items()->saveMany($items);
                 DB::commit();
-                var_dump($invoice);
+               // var_dump($invoice);
                 //return $submission;
             }
             DB::rollBack();
@@ -97,7 +98,20 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
             var_dump($ex->getMessage());
 
             DB::rollBack();
+            foreach ($data['items'] as $val) {
+                $item = new Item();
+                foreach ($val as $key => $value) {
+                    $item->$key = $value;
 
+                }
+                $stock_data=Stock::where('barcode_id',$item->product_id)->first();
+                //$stock = new Stock();
+                $stock=$stock_data;
+                $stock->stock_out=$stock->stock_out-$item->quantity;
+                $stock->stock_balance=$stock->stock_in-$stock->stock_out;
+                $stock->save();
+                $items[] = $item;
+            }
             return false;
         }
 

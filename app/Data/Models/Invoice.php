@@ -73,4 +73,5 @@ class Invoice extends Model
     {
         return $this->belongsTo(Item::class, 'invoice_id', 'id');
     }
+
 }

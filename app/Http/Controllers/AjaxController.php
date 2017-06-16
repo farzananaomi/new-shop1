@@ -42,15 +42,16 @@ class AjaxController extends Controller
         return response()->json($candidate, 200);
 
     }
-public function get_product_details(StockRepository $repo ,ProductRepository $prod)
-{
-    $id = $_REQUEST['id'];
 
-    $data = $repo->get_product_details($id);
-    $data->name=$prod->find($data->product_id)->product_name;
+    public function get_product_details(StockRepository $repo, ProductRepository $prod)
+    {
+        $id = $_REQUEST['id'];
 
-    return response()->json($data, 200);
-}
+        $data = $repo->get_product_details($id);
+        $data->name = $prod->find($data->product_id)->product_name;
+
+        return response()->json($data, 200);
+    }
 
     public function getEntity(ProductRepository $repo)
     {

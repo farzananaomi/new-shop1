@@ -79,18 +79,21 @@
                                                 <th>Total</th>
                                             </tr>
                                             </thead>
-                                            <tbody id="exp" name="exp">
+                                            <tbody id="exp" name="exp"></tbody>
                                             <tfoot>
                                             <tr>
 
                                                 <td class="table-empty" colspan="5" style=" border: 0"></td>
-                                                <td class="table-label"><span id="sub_total"></span></td>
-                                                <td class="table-amount"><span id="vat_total"></span></td>
-                                                <td class="table-amount"><span id="total_amount"></span></td>
+                                                <td class="table-label"><input type="text" class="form-control" value="0" id="sub_total"
+                                                                               name="sub_total" readonly/></td>
+                                                <td class="table-amount"><input type="text" class="form-control" value="0" id="vat_total"
+                                                                                name="vat_total" readonly/></td>
+                                                <td class="table-amount"><input type="text" class="form-control" value="0" id="total_amount"
+                                                                                name="total_amount" readonly/></td>
 
 
                                             </tr>
-                                            <tfoot>
+
 
                                             <tr>
                                                 <td class="table-empty" colspan="3" style=" border: 0"></td>
@@ -114,13 +117,10 @@
                                             </tr>
 
 
-
-
                                             </tfoot>
-                                            <input type="text" hidden="hidden" value="1" id="countexp" name="countexp"/>
+                                            <input type="hidden" value="1" id="countexp" name="countexp"/>
+                                            <input type="hidden" value="" id="in_words_h" name="in_words_h"/>
 
-
-                                            </tbody>
                                         </table>
 
                                     </div>
@@ -133,12 +133,12 @@
 
                                 </div>
 
-                                <div class="col-xs-2">
-                                    @include('partials.bs_text', ['name' => 'bank_amount',   'useOld' => '','placeholder'=>'Card amount'])
-                                </div>
 
                                 <div class="col-xs-2">
                                     @include('partials.bs_text', ['name' => 'card_type', 'useOld' => '','placeholder'=>'Card Details'])
+                                </div>
+                                <div class="col-xs-2">
+                                    @include('partials.bs_text', ['name' => 'bank_amount',   'useOld' => '','placeholder'=>'Card amount'])
                                 </div>
                             </div>
                         </div>
@@ -174,7 +174,7 @@
     );
     var countBox = 1;
 
-     $(document).ready(function () {
+    $(document).ready(function () {
         $("#card_type").hide();
         $("#bank_amount").hide();
     });
@@ -184,10 +184,11 @@
         var payment_type = $("#payment_type").val();
         if (payment_type == 'Card') {
             $("#card_type").show();
-            $("#bank_amount").show();
+            $("#bank_amount").hide();
         } else if (payment_type == 'Both') {
             $("#card_type").show();
             $("#bank_amount").show();
+            $("#bank_amount").val('');
         } else {
             $("#card_type").hide();
             $("#bank_amount").hide();
@@ -254,7 +255,7 @@
 
         vat = convert_decimal(vat);
         vat = parseFloat(vat);
-        $("#items_" + id_number + "_vat_total").val(vat);
+
 
         var total = $("#items_" + id_number + "_total").val();
         total = convert_decimal(total);
@@ -270,6 +271,8 @@
         // alert("Sub total " + sub_total + " vat " + vat + " total " + total);
         sub_total = sub_total * 100;
         total = sub_total + sub_total * vat / 100;
+        var vat_total= sub_total * vat / 100;
+        $("#items_" + id_number + "_vat_total").val(vat_total);
         //  alert("Sub total 2 " + sub_total + " vat 2 " + vat + " total 2 " + total);
         total = total / 100;
         total = convert_decimal(total);
@@ -296,30 +299,33 @@
             } catch (exp) {
 
             }
-            alert("c sub " + sub_total + " c total " + total);
+            //  alert("c sub " + sub_total + " c total " + total);
         }
         vat_total = total - sub_total;
         var flat_discunt = $("#discount").val();
         flat_discunt = convert_decimal(flat_discunt);
         flat_discunt = parseFloat(flat_discunt);
         var grand_total = total * 100 - flat_discunt * 100;
-        alert(total + " f " + flat_discunt);
+        // alert(total + " f " + flat_discunt);
         grand_total = grand_total / 100;
         grand_total = convert_decimal(grand_total);
         sub_total = convert_decimal(sub_total);
         vat_total = convert_decimal(vat_total);
         total = convert_decimal(total);
         $("#grand_total").val(grand_total);
-        $("#sub_total").html("= " + sub_total);
-        $("#vat_total").html("= " + vat_total);
-        $("#total_amount").html("= " + total);
+        // $("#sub_total").html("= " + sub_total);
+        // $("#vat_total").html("= " + vat_total);
+        $("#vat_total").val(vat_total);
+        $("#sub_total").val(sub_total);
+        $("#total_amount").val( total);
 
         var total_payable = parseInt(grand_total);
-        alert("c sub " + sub_total + " c total " + total + " p " + total_payable + " g " + grand_total);
+        //  alert("c sub " + sub_total + " c total " + total + " p " + total_payable + " g " + grand_total);
         $("#total_payable").val(total_payable);
         var in_words = inWords(total_payable);
-
+        $("#bank_amount").val(total_payable);
         $("#in_words").html("= " + in_words);
+        $("#in_words_h").val(in_words);
 
     }
     function convert_decimal(num3) {

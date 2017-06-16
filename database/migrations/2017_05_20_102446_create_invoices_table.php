@@ -26,12 +26,13 @@ class CreateInvoicesTable extends Migration
             $table->decimal('vat_total',15,3)->default(0)->nullable();
                 $table->decimal('sub_total',15,3)->default(0)->nullable();
             $table->decimal('discount',15,3)->default(0)->nullable();
-            $table->decimal('ground_total',15,3)->default(0)->nullable();
-            $table->decimal('round_total',15,3)->default(0)->nullable();
+            $table->decimal('grand_total',15,3)->default(0)->nullable();
+            $table->decimal('total_payable',15,3)->default(0)->nullable();
 
             $table->enum('payment_type', ['Cash', 'Card', 'both'])->nullable();
             $table->tinyInteger('status')->nullable()->default(0);
             $table->string('card_type')->nullable()->default('');
+
             $table->decimal('bank_amount', 15, 3)->default(0)->nullable();
             $table->decimal('cash_amount', 15, 3)->default(0)->nullable();
             $table->tinyInteger('payment_status')->default(0)->nullable();
