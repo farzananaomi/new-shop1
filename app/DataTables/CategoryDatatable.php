@@ -41,11 +41,13 @@ class CategoryDatatable extends DataTable
             ->addColumn('action', function ($category) {
                 return view('categories.action', compact('category'))->render();
             })
+
             ->addColumn('parent_id', function ($m) {
                // var_dump($m);
 
                return $m->subCategories ? $m->subCategories->name : '';
             })
+
             ->make(true);
 
         /**
@@ -71,6 +73,7 @@ class CategoryDatatable extends DataTable
     public function html()
     {
         return $this->builder()
+
             ->columns($this->getColumns())
             ->ajax('')
             ->addAction([ 'className' => 'td-actions text-right' ])
@@ -80,6 +83,9 @@ class CategoryDatatable extends DataTable
                     'reload',
                 ],
             ]);
+
+
+
     }
 
     /**
@@ -90,10 +96,13 @@ class CategoryDatatable extends DataTable
     protected function getColumns()
     {
         return [
+
             // [ 'name' => 'categories.category_id', 'data' => 'category_id', 'title' => 'Category Name' ],
             [ 'name' => 'categories.name', 'data' => 'name', 'title' => 'Category Name' ],
             [ 'name' => 'categories.description', 'data' => 'description', 'title' => ' Description' ],
             [ 'name' => 'categories.parent_id', 'data' => 'parent_id', 'title' => 'Parent Category' ],
+
+
 
         ];
     }

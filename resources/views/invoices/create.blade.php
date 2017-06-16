@@ -13,6 +13,7 @@
                                 <div class="col-xs-4">
                                     @include('partials.bs_text', ['name' => 'customer_name', 'label' => 'Full Name', 'useOld' => '', 'horizontal' => 'false'])
                                 </div>
+
                                 <div class="col-xs-4">
                                     @include('partials.bs_text', ['name' => 'mobile_no', 'label' => 'Contact', 'useOld' => '', 'horizontal' => 'false'])
                                 </div>
@@ -29,6 +30,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="card">
@@ -73,28 +75,27 @@
                                                 <th>Discount %</th>
                                                 <th>Sub Total</th>
                                                 <th>Vat %</th>
+
                                                 <th>Total</th>
                                             </tr>
                                             </thead>
                                             <tbody id="exp" name="exp">
-                                            {{--  <tr>
-                                                  <td>@include('partials.bs_table', ['name' => 'items[1][product_id]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                                  <td>@include('partials.bs_table', ['name' => 'items[1][name]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                                  <td>@include('partials.bs_table', ['name' => 'items[1][quantity]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                                  <td>@include('partials.bs_table', ['name' => 'items[1][unit_price]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                                  <td>@include('partials.bs_table', ['name' => 'items[1][total]',  'useOld' => '', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-
-                                              </tr>--}}
                                             <tfoot>
                                             <tr>
+
                                                 <td class="table-empty" colspan="5" style=" border: 0"></td>
                                                 <td class="table-label"><span id="sub_total"></span></td>
                                                 <td class="table-amount"><span id="vat_total"></span></td>
                                                 <td class="table-amount"><span id="total_amount"></span></td>
+
+
                                             </tr>
+                                            <tfoot>
+
                                             <tr>
                                                 <td class="table-empty" colspan="3" style=" border: 0"></td>
                                                 <td class="table-label">Discount</td>
+
                                                 <td><input type="text" value="0" id="discount" name="discount"
                                                            class="form-control" onchange="calculate_total();"/></td>
                                                 <td class="table-label"></td>
@@ -111,31 +112,10 @@
                                                     <input type="text" value="0" id="total_payable" name="total_payable"
                                                            class="form-control" readonly/></td>
                                             </tr>
-                                            {{--<tr>
-                                                <td class="table-empty" colspan="3" style=" border: 0"></td>
-                                                <td class="table-label">Vat</td>
-                                                <td>@include('partials.bs_table', ['name' => 'vat', 'useOld' => '0','extras' => 'required="required"'])</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="table-empty" colspan="3" style=" border: 0"></td>
-                                                <td class="table-label">Vat Total</td>
-                                                <td class="table-amount"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="table-empty" colspan="3" style=" border: 0"></td>
-                                                <td class="table-label">Discount</td>
-                                                <td>@include('partials.bs_table', ['name' => 'discount', 'useOld' => '0', 'horizontal' => 'true', 'extras' => 'required="required"'])</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="table-empty" colspan="3" style=" border: 0"></td>
-                                                <td class="table-label">Grand Total</td>
-                                                <td class="table-amount"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="table-empty" colspan="3" style=" border: 0"></td>
-                                                <td class="table-label">Round Total</td>
-                                                <td class="table-amount"></td>
-                                            </tr>--}}
+
+
+
+
                                             </tfoot>
                                             <input type="text" hidden="hidden" value="1" id="countexp" name="countexp"/>
 
@@ -153,17 +133,12 @@
 
                                 </div>
 
-                                <div class="col-xs-4">
-                                    @include('partials.bs_text', ['name' => 'bank_amount',   'useOld' => '','horizontal' => 'false','placeholder'=>'Card amount'])
+                                <div class="col-xs-2">
+                                    @include('partials.bs_text', ['name' => 'bank_amount',   'useOld' => '','placeholder'=>'Card amount'])
                                 </div>
-                                <div class="col-xs-4">
 
-                                </div>
-                                <div class="col-xs-4">
-
-                                </div>
-                                <div class="col-xs-4">
-                                    @include('partials.bs_text', ['name' => 'card_type', 'useOld' => '','horizontal' => 'false','placeholder'=>'Card Details'])
+                                <div class="col-xs-2">
+                                    @include('partials.bs_text', ['name' => 'card_type', 'useOld' => '','placeholder'=>'Card Details'])
                                 </div>
                             </div>
                         </div>
@@ -199,17 +174,21 @@
     );
     var countBox = 1;
 
+     $(document).ready(function () {
+        $("#card_type").hide();
+        $("#bank_amount").hide();
+    });
 
-    $(document).on('change', '#payment_type', function() {
+    $(document).on('change', '#payment_type', function () {
         // Does some stuff and logs the event to the console
-        var payment_type=$("#payment_type").val();
-        if(payment_type=='Card'){
+        var payment_type = $("#payment_type").val();
+        if (payment_type == 'Card') {
             $("#card_type").show();
             $("#bank_amount").show();
-        }else if(payment_type=='Both'){
+        } else if (payment_type == 'Both') {
             $("#card_type").show();
             $("#bank_amount").show();
-        }else{
+        } else {
             $("#card_type").hide();
             $("#bank_amount").hide();
         }
@@ -225,7 +204,7 @@
                 type: "get",
                 success: function (result) {
                     if (result.length != 0) {
-                        var sub =  result.sell_price - result.sell_price * result.discount_percent / 100 - result.flat_discount;
+                        var sub = result.sell_price - result.sell_price * result.discount_percent / 100 - result.flat_discount;
                         document.getElementById("countexp").value = countBox;
                         var newChild = document.createElement("tr");
                         document.getElementById("countexp").value = countBox;
@@ -265,24 +244,24 @@
 
         var discount = $("#items_" + id_number + "_discount_percent").val();
         discount = convert_decimal(discount);
-        discount=parseFloat(discount);
+        discount = parseFloat(discount);
         var qty = $("#items_" + id_number + "_quantity").val();
-        qty=parseInt(qty);
+        qty = parseInt(qty);
         var unit_price = $("#items_" + id_number + "_unit_price").val();
         unit_price = convert_decimal(unit_price);
-        unit_price=parseFloat(unit_price);
+        unit_price = parseFloat(unit_price);
         var vat = $("#items_" + id_number + "_vat_rate").val();
 
         vat = convert_decimal(vat);
-        vat=parseFloat(vat);
+        vat = parseFloat(vat);
         $("#items_" + id_number + "_vat_total").val(vat);
 
         var total = $("#items_" + id_number + "_total").val();
         total = convert_decimal(total);
-        total=parseFloat(total);
+        total = parseFloat(total);
         var sub_total = $("#items_" + id_number + "_sub_total").val();
         sub_total = convert_decimal(sub_total);
-        sub_total=parseFloat(sub_total);
+        sub_total = parseFloat(sub_total);
         unit_price = unit_price * 100;
         sub_total = unit_price - unit_price * discount / 100;
         sub_total = sub_total * qty / 100;
@@ -324,7 +303,7 @@
         flat_discunt = convert_decimal(flat_discunt);
         flat_discunt = parseFloat(flat_discunt);
         var grand_total = total * 100 - flat_discunt * 100;
-        alert(total+" f "+flat_discunt);
+        alert(total + " f " + flat_discunt);
         grand_total = grand_total / 100;
         grand_total = convert_decimal(grand_total);
         sub_total = convert_decimal(sub_total);
@@ -349,14 +328,16 @@
         } catch (exp) {
             num3 = 0;
         }
-        if(num3==NaN){
-            return num3=0;
+        if (num3 == NaN) {
+            return num3 = 0;
         }
         return parseFloat(Math.round(num3 * 100) / 100).toFixed(2);
     }
 
+
     var a = ['', 'one ', 'two ', 'three ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen '];
     var b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
 
     function inWords(num) {
         if ((num = num.toString()).length > 9) return 'overflow';

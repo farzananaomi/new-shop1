@@ -20,8 +20,12 @@ class CategoryController extends Controller
     public function index (CategoryDatatable $datatable)
     {
 
+
          return $datatable->render('categories.index');
       }
+
+
+
     /*public function create()
     {
         return view('categories.create');

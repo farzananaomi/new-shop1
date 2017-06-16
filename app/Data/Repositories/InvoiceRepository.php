@@ -47,8 +47,13 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
         //var_dump($customer);
         $invoice = new Invoice();
         $invoice->customer_id = $customer->id;
+
      //   $invoice->invoice_no = $data['invoice_no'];
         $invoice->invoice_date = strtotime($data['invoice_date']); //date('Y-m-d H:i:s');
+
+        $invoice->invoice_no = $data['invoice_no'];
+        $invoice->invoice_date = date('Y-m-d H:i:s');
+
         $invoice->payment_type = $data['payment_type'];
         $invoice->card_type = sanitize(@$data['card_type'], 0);
         $invoice->bank_amount = sanitize(@$data['bank_amount'], 0);
@@ -56,7 +61,11 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
         $invoice->payment_status = 1;//sanitize(@$data['payment_status'], 0);
         $invoice->status =1;// sanitize(@$data['status'], 1);
 
+
         $invoice->sub_total = 1;
+
+        $invoice->sub_total = sanitize(@$data['total'], 1);
+
         $invoice->discount = $data['discount'];
         $invoice->vat_rate =sanitize(@$data['vat_rate'],0);
         $invoice->vat_total = sanitize(@$data['vat_total'], 0);
