@@ -48,7 +48,7 @@ class InvoiceRepository implements PaginatedResultInterface, RawQueryBuilderOutp
         $invoice = new Invoice();
         $invoice->customer_id = $customer->id;
      //   $invoice->invoice_no = $data['invoice_no'];
-        $invoice->invoice_date = date('Y-m-d H:i:s');
+        $invoice->invoice_date = strtotime($data['invoice_date']); //date('Y-m-d H:i:s');
         $invoice->payment_type = $data['payment_type'];
         $invoice->card_type = sanitize(@$data['card_type'], 0);
         $invoice->bank_amount = sanitize(@$data['bank_amount'], 0);

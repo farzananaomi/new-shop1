@@ -20,13 +20,7 @@
                                     @include('partials.bs_text', ['name' => 'address', 'label' => 'Address', 'useOld' => '', 'horizontal' => 'false'])
                                 </div>
 
-                                <div class="col-xs-4">
-                                    @include('partials.bs_date', ['name' => 'invoice_date',  'label' => 'Invoice Date', 'useOld' => date('Y-m-d'),'horizontal' => 'false', 'extras' => 'data-bind="text: dob"',])
-                                </div>
-                                <div class="col-xs-4">
-                                    @include('partials.selectpicker', ['name' => 'payment_type',  'label' => 'Payment Type',  'options' =>['Cash', 'Card', 'Both'], 'horizontal' => 'false','useKeys' => false,'useOld' => '',])
 
-                                </div>
                             </div>
 
 
@@ -151,7 +145,26 @@
 
                                     </div>
                                 </div>
+                                <div class="col-xs-4">
+                                    @include('partials.bs_date', ['name' => 'invoice_date',  'label' => 'Invoice Date', 'useOld' => date('Y-m-d'),'horizontal' => 'false', 'extras' => 'data-bind="text: dob"',])
+                                </div>
+                                <div class="col-xs-4">
+                                    @include('partials.selectpicker', ['name' => 'payment_type',  'label' => 'Payment Type',  'options' =>['Cash', 'Card', 'Both'], 'horizontal' => 'false','useKeys' => false,'useOld' => '',])
 
+                                </div>
+
+                                <div class="col-xs-4">
+                                    @include('partials.bs_text', ['name' => 'bank_amount',   'useOld' => '','horizontal' => 'false','placeholder'=>'Card amount'])
+                                </div>
+                                <div class="col-xs-4">
+
+                                </div>
+                                <div class="col-xs-4">
+
+                                </div>
+                                <div class="col-xs-4">
+                                    @include('partials.bs_text', ['name' => 'card_type', 'useOld' => '','horizontal' => 'false','placeholder'=>'Card Details'])
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -186,6 +199,23 @@
     );
     var countBox = 1;
 
+
+    $(document).on('change', '#payment_type', function() {
+        // Does some stuff and logs the event to the console
+        var payment_type=$("#payment_type").val();
+        if(payment_type=='Card'){
+            $("#card_type").show();
+            $("#bank_amount").show();
+        }else if(payment_type=='Both'){
+            $("#card_type").show();
+            $("#bank_amount").show();
+        }else{
+            $("#card_type").hide();
+            $("#bank_amount").hide();
+        }
+
+
+    });
     function addExp() {
         var barcode_id = document.getElementById("barcode_id").value;
         if (barcode_id.length > 5) {
