@@ -17,7 +17,7 @@ Route::group(['middleware' => 'auth:web',], function () {
     Route::resource('invoices', InvoiceController::class);
     Route::resource('products', ProductController::class);
     Route::resource('users', UserController::class);
-
+    Route::get('barcodes', ['as' => 'barcodes.printbarcode', 'uses' => 'StockController@printbarcode']);
 
     Route::get('ajax/category', ['as' => 'ajax.category', 'uses' => 'AjaxController@getCategory']);
     Route::get('ajax/sub_category/{id?}', ['as' => 'ajax.sub_category', 'uses' => 'AjaxController@getSubCategory']);

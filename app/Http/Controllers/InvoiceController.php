@@ -8,8 +8,11 @@ use App\Data\Repositories\InvoiceRepository;
 use App\DataTables\InvoiceDatatable;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Redirect;
+
 use PDF;
 use Illuminate\Http\Request;
+
 
 
 class InvoiceController extends Controller
@@ -21,7 +24,7 @@ class InvoiceController extends Controller
     protected $invoices;
     protected $categories;
 
-    public function __construct(InvoiceRepository $invoices,CategoryRepository $categories)
+    public function __construct(InvoiceRepository $invoices, CategoryRepository $categories)
     {
         $this->invoices = $invoices;
         $this->categories = $categories;
@@ -30,7 +33,7 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = Invoice::orderBy('created_at', 'desc')
-                           ->paginate(8);
+            ->paginate(8);
 
         return view('invoices.index', compact('invoices'));
     }
@@ -43,24 +46,26 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-      //  dd($data);
+        //  dd($data);
         $invoice = $this->invoices->store($data);
-        //dd($invoice);
-        return redirect()->route('invoices.index');
+
+          return Redirect::to('invoices/'.$invoice->id.'/');
+
     }
 
-   /* public function show($id)
+    /* public function show($id)
+     {
+         $invoice = $this->invoices->find($id);
+
+         return view('invoices.show', compact('invoice'));
+     }*/
+    public function show($id, Request $request)
     {
         $invoice = $this->invoices->find($id);
 
-        return view('invoices.show', compact('invoice'));
-    }*/
-    public function show($id,Request $request)
-    {   $invoice = $this->invoices->find($id);
-
-        if($request->has('download')){
+        if ($request->has('download')) {
             $pdf = PDF::loadView('invoices.export', compact('invoice'));
-            return $pdf->download("invoice.pdf");
+            return $pdf->download("invoice".$invoice->id.".pdf");
         }
 
         return view('invoices.show', compact('invoice'));
@@ -74,8 +79,8 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -86,7 +91,7 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

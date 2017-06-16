@@ -2,37 +2,51 @@
 
 @section('content')
     <div class="panel panel-default">
+
         <div class="panel-heading">
-            <div class="clearfix">
-                <span class="panel-title">Invoice</span>
-                <div class="pull-right">
+            <div class="row">
+
+                <div class="col-sm-8 ">
+                    <div class="panel-title"> Invoice</div>
+                </div>
+                <div class=" col-sm-1  ">
                     <a href="{{route('invoices.index')}}" class="btn btn-default">Back</a>
+
+                </div>
+                <div class=" col-sm-1   ">
                     <a href="{{route('invoices.edit', $invoice)}}" class="btn btn-primary">Edit</a>
+                </div>
+                <div class=" col-sm-1  ">
                     <form class="form-inline" method="post"
                           action="{{route('invoices.destroy', $invoice)}}"
-                          onsubmit="return confirm('Are you sure?')"
-                    >
+                          onsubmit="return confirm('Are you sure?')">
                         <input type="hidden" name="_method" value="delete">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <input type="submit" value="Delete" class="btn btn-danger">
-
-                        <a href="{{ route('invoices.show', [$invoice->id, 'download' => 'pdf']) }}" rel="tooltip" title="" class="btn btn-info" target="_blank"
-                           data-original-title="Export PDF"><i class="material-icons"></i> Export</a>
-
                     </form>
                 </div>
+                <div class=" col-sm-1   ">
+                    <a href="{{ route('invoices.show', [$invoice->id, 'download' => 'pdf']) }}" id="click_download"
+                       rel="tooltip"
+                       title="" class="btn btn-info" target="_blank"
+                       data-original-title="Export PDF"><i class="material-icons"></i> Export</a>
+                </div>
+
+
             </div>
         </div>
+
+
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Invoice No.</label>
-                        <p>{{$invoice->invoice_no}}</p>
+                        <p>{{$invoice->id}}</p>
                     </div>
                     <div class="form-group">
                         <label>Grand Total</label>
-                        <p>${{$invoice->ground_total}}</p>
+                        <p>${{$invoice->grand_total}}</p>
                     </div>
                     <div class="form-group">
                         <label>Payment Type</label>
@@ -100,7 +114,7 @@
                 <tr>
                     <td class="table-empty" colspan="2" style="border:0"></td>
                     <td class="table-label">Grand Total</td>
-                    <td class="table-amount">${{$invoice->ground_total}}</td>
+                    <td class="table-amount">{{$invoice->grand_total}}</td>
                 </tr>
                 </tfoot>
             </table>
@@ -108,3 +122,17 @@
     </div>
 
 @endsection
+@push('scripts')
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        setTimeout(function () {
+
+
+
+        }, 2000);
+    })
+
+</script>
+@endpush

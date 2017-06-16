@@ -252,7 +252,11 @@
                         <p> Storage List</p>
                     </a></li>
 
-
+                <li class="{{ is_active('edit_requests*') }}">
+                    <a href="{{ route('barcodes.printbarcode')}}">
+                        <i class="fa fa-pencil"></i>
+                        <p> Print Barcode</p>
+                    </a></li>
             </ul>
         </div>
     </div>

@@ -26,7 +26,7 @@
                     @foreach($invoices as $invoice)
                         <tr>
                             <td>{{$invoice->invoice_no}}</td>
-                            <td>${{$invoice->ground_total}}</td>
+                            <td>{{$invoice->grand_total}}</td>
                             <td>{{$invoice->customer->customer_name}}</td>
                             <td>{{$invoice->invoice_date}}</td>
                             <td>{{$invoice->created_at->diffForHumans()}}</td>

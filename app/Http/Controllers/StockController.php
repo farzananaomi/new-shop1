@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Data\Repositories\StockRepository;
+use App\DataTables\BarcodeDatatable;
 use App\DataTables\StockDatatable;
 use Illuminate\Http\Request;
-
+use PDF;
+use DNS1D;
+use DNS2D;
 class StockController extends Controller
 {
     /**
@@ -22,7 +25,10 @@ class StockController extends Controller
     {
         return $datatable->render('stocks.index');
     }
-
+    public function printbarcode(BarcodeDatatable $datatable)
+    {
+        return $datatable->render('barcodes.index');
+    }
     public function create()
     {
         return view('stocks.create');
@@ -37,9 +43,14 @@ class StockController extends Controller
         return redirect()->route('stocks.index');
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
         $stock = $this->stocks->find($id);
+
+        if ($request->has('download')) {
+            $pdf = PDF::loadView('barcodes.export', compact('stock'));
+            return $pdf->download("barcode".$stock->id.".pdf");
+        }
 
         return view('stocks.show', compact('stock'));
     }
